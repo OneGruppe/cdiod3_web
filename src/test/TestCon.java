@@ -21,6 +21,8 @@ public class TestCon{
 
 	String username = "Eclipse-bruger"; 
 	String password = "ySmTL37uDjYZmzyn";
+	
+	private ArrayList<String> roomsArray;
 
 	public boolean doConnection(){ 
 		try {
@@ -43,7 +45,7 @@ public class TestCon{
 	}
 
 	public ArrayList<String> showListOfRoles() {
-		ArrayList<String> roomsArray = new ArrayList<String>();
+		roomsArray = new ArrayList<String>();
 		String query = "SELECT * FROM roles";
 
 		try {

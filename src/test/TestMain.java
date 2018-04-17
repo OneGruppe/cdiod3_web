@@ -1,21 +1,30 @@
 package test;
 
-public class TestMain {
+import java.util.ArrayList;
 
-	public static void main(String[] args) {
-		//Lav objekt af testConnection
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+@Path("test_database")
+public class TestMain {
+	
+	@GET
+	public String getRoller() {
+
+		// Lav objekt af testConnection
 		TestCon con = new TestCon();
-		
+
+		String besked;
 		// Forbindelse
-		if(con.doConnection()) {
-		System.out.println("Connection is established");
-		}else {
-			System.out.println("No connection");
+		if (con.doConnection()) {
+			besked = "Connection is established: ";
+		} else {
+			besked = "No connection: ";
 		}
 		
-		//Print rooms in building
-		for(String room : con.showListOfRoles()) {
-			System.out.println(room);
-		}
+		ArrayList<String> roles = con.showListOfRoles();
+		
+		
+		return besked + "<br><br>" + roles.toString();
 	}
 }
