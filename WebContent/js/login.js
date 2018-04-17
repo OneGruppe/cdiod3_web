@@ -2,6 +2,13 @@ $(document).ready(function() {
     $("#createUserButton").click(function() {
         load("createUser.html");
     });
+
+    //Det Mathias brugte 4 timer på :(
+    $("#adminButtons").click(function() {
+        $("createUserButton").load("../createUser.html");
+        // $("showUserButton").load("showUser.html", alert("lort"));
+        // $("logoutButton").load("Login.html", alert("AGAGRAHGRAHRGAHRGAHRGAHRG"));
+    });
     
     $("#showUserButton").click(function() {
         alert("show User test DING");
