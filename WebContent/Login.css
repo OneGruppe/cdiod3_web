@@ -1,0 +1,32 @@
+
+body {
+  background-color: #f9f6e8;
+}
+
+.login {
+  width: 280px;
+  height: 100px;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 5px 20px 50px;
+  font-family: sans-serif;
+  padding: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+  margin-bottom: auto;
+}
+
+form {
+  display: table;
+}
+
+#username {
+  margin-left: 25px;
+  margin-bottom: 20px;
+}
+
+#password {
+  margin-left: 25px;
+}
