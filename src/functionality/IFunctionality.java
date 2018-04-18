@@ -60,6 +60,8 @@ public interface IFunctionality {
 	 * @return a string containing all the objects toString() + password and CPR from user.
 	 * @throws DALException - exception handling
 	 */
-	String showUserListAdmin() ;
+	String showUserListAdmin();
+	
+	String login(String usr, String pass);
 
 }

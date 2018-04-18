@@ -1,7 +1,12 @@
 package functionality;
 
-import data.*;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 
+import data.UserDTO;
+
+@Path("functionality")
 public class Functionality  implements IFunctionality{
 
 	public void changeUser(int id, String newName, String newPassword, String newIni) {
@@ -35,6 +40,16 @@ public class Functionality  implements IFunctionality{
 	public String showUserListAdmin() {
 		
 		return null;
+	}
+	
+	@POST
+	@Path("login")
+	public String login(@FormParam("username") String usr, @FormParam("password") String pass) {
+		if(!usr.equals("Admin") && !pass.equals("")) {
+			return "Password er forkert"; 
+		} else {
+			return "Password er korrekt";
+		}
 	}
 
 }
