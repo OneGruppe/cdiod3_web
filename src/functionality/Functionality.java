@@ -44,11 +44,11 @@ public class Functionality  implements IFunctionality{
 	
 	@POST
 	@Path("login")
-	public String login(@FormParam("username") String usr, @FormParam("password") String pass) {
+	public boolean login(@FormParam("username") String usr, @FormParam("password") String pass) {
 		if(usr.equals("Admin") && pass.equals("")) {
-			return "Password er korrekt"; 
+			return true; 
 		} else {
-			return "Password er forkert";
+			return false;
 		}
 	}
 

@@ -62,6 +62,6 @@ public interface IFunctionality {
 	 */
 	String showUserListAdmin();
 	
-	String login(String usr, String pass);
+	boolean login(String usr, String pass);
 
 }
