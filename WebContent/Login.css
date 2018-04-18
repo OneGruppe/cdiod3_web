@@ -3,6 +3,10 @@ body {
   background-color: #f9f6e8;
 }
 
+label {
+	font-weight: 600;
+}
+
 .login {
   width: 280px;
   height: 100px;
