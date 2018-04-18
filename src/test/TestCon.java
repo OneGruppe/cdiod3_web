@@ -66,7 +66,7 @@ public class TestCon{
 	
 	public boolean isUserAndPassCorrect(String usr, String pass) {
 		boolean isMatch = false;
-		String query = "SELECT * FROM login WHERE brugernavn='" + usr + "'";
+		String query = "SELECT * FROM login WHERE username='" + usr + "'";
 
 		try {
 			Statement stmt = connection.createStatement();
