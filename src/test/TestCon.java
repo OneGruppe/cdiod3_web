@@ -63,4 +63,25 @@ public class TestCon{
 			return null;
 		}
 	}
+	
+	public boolean isUserAndPassCorrect(String usr, String pass) {
+		boolean isMatch = false;
+		String query = "SELECT * FROM login WHERE brugernavn='" + usr + "'";
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				if (rs.getString("password").equals(pass)){
+					isMatch = true;
+				}
+			}
+			return isMatch;
+
+		} catch (SQLException e) {
+			// Could not connect to the database
+			System.out.println(e.getMessage()); 
+			return isMatch;
+		}
+	}
 }
