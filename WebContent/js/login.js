@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	$("#loginButton").click(function() {
+		$(".login").hide();
+		$(".loadToDiv").load("adminlogin.html");
+	});
+	
     $("#createUserButton").click(function() {
         load("createUser.html");
     });
