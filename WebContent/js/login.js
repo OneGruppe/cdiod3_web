@@ -34,5 +34,9 @@ $(document).ready(function() {
     $("#frontPage").click(function() {
         $(".loadToDiv").load("adminlogin.html"); 		
     })
+    
+    $("#actuallyCreatingAUser").click(function() {
+    	alert("Shit works yo");
+    })
 
 });
