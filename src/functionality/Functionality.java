@@ -14,8 +14,10 @@ public class Functionality implements IFunctionality{
 
 	}
 
-	public void createUser(String name, String password, String ini, String cpr) {
-
+	@POST
+	@Path("createUser")
+	public void createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr @FormParam("role") String role) {
+		
 	}
 
 	public void deleteUser(int id) {

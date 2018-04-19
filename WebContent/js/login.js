@@ -24,7 +24,8 @@ $(document).ready(function() {
     });
     
     $("#showUserButton").click(function() {
-        $(".loadToDiv").load("showUsers.html");
+        	$(".loadToDiv").load("showUsers.html");
+        })
     })
     
     $("#logoutButton").click(function() {
@@ -36,7 +37,15 @@ $(document).ready(function() {
     })
     
     $("#actuallyCreatingAUser").click(function() {
-    	alert("Shit works yo");
+    	$.ajax({
+    		url:"rest/functionality/createUser",
+    		data: $('createUserFunction').serialize(),
+    		contenttype: "application/x-ww-form-urlencoded",
+    		method: "POST",
+    		success:function(data) {
+    			$(".loadToDiv").load("createUser.html");
+    		}
     })
+    console.log($('createUserFunction').serialize());
 
 });
