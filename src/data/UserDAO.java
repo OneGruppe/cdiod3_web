@@ -14,19 +14,15 @@ public class UserDAO implements IUserDAO {
 	Connection connection = null;
 
 	final String driverName = "com.mysql.jdbc.Driver";
-	String serverName;
-	String portNumber;
-	String url;
-	String userName;
-	String password;
+	String serverName = "91.100.3.26"; // Use this server. 
+	String portNumber = "9865";
+	String projectName = "CDIO3";
+	String url ="jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
 
-	public UserDAO(String serverName, String portNumber, String url, String userName, String password) {
-		this.serverName = serverName;
-		this.portNumber = portNumber;
-		this.url = url;
-		this.userName = userName;
-		this.password = password;		
+	String userName = "Eclipse-bruger"; 
+	String password = "ySmTL37uDjYZmzyn";
 
+	public boolean doConnection(){ 
 		try {
 			// Load the JDBC driver
 			Class.forName(driverName);
@@ -37,15 +33,24 @@ public class UserDAO implements IUserDAO {
 		} catch (ClassNotFoundException e) {
 			// Could not find the database driver 
 			System.out.println("ClassNotFoundException : "+e.getMessage());
+			return false;
 		} catch (SQLException e) {
 			// Could not connect to the database
 			System.out.println(e.getMessage()); 
+			return false;
 		}
+		return true; 
 	}
 
 	@Override
-	public UserDTO getUser(int userId) throws DALException {
-		String query = "SELECT * FROM Users WHERE userID='" + userId + "'"+";";
+	public UserDTO getUser(String username) throws DALException {
+		System.out.println("*** DAO: getUser '" + username + "' ***");
+		String query = "SELECT * FROM users WHERE username='" + username + "'";
+		int userId = 99999999;
+		String userName = null;
+		String ini = null;
+		String password = null;
+		String cpr = null;
 
 		try {
 			java.sql.Statement stmt = connection.createStatement();

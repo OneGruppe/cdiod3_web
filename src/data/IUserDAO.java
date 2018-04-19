@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IUserDAO {
 
-	UserDTO getUser(int userId) throws DALException;
+	UserDTO getUser(String userName) throws DALException;
 	
 	/**
 	 * Gets list of users from disk
