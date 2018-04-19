@@ -12,12 +12,14 @@ public class UserDTO implements Serializable {
 	private String cpr;
 	private List<String> roles;
 
-	public UserDTO(int userId, String userName, String password, String ini, String cpr) {
+
+	public UserDTO(int userId, String userName, String password, String ini, String cpr, List<String> roles) {
 		this.userId = userId;
 		this.userName = userName;
 		this.password = password;
 		this.ini = ini;
 		this.cpr = cpr;
+		this.roles = roles;
 	}
 
 	/**
@@ -86,7 +88,21 @@ public class UserDTO implements Serializable {
 	public void setCpr(String cpr) {
 		this.cpr = cpr;
 	}
-
+	
+	/**
+	 * @return List of roles
+	 */
+	public List<String> getRoles() {
+		return roles;
+	}
+	
+	/**
+	 * @param set new list of roles
+	 */
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+	
 	/**
 	 * Overrides the user objects toString() 
 	 */
