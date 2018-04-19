@@ -12,7 +12,7 @@ $(document).ready(function() {
 					$(".loadToDiv").load("adminlogin.html");					
 				}
 				else{
-					alert("Password is wrong, try again");
+					alert("Password doesn't match username, try again");
 				}
 			}
 		})
