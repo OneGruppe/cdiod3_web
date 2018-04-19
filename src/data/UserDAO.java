@@ -53,15 +53,26 @@ public class UserDAO implements IUserDAO {
 		String cpr = null;
 
 		try {
-			java.sql.Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query); 
-			String username = rs.getString("UserName");
-			String ini = rs.getString("ini");
-			String Password = rs.getString("password");
-			String cpr = rs.getString("cpr");
-			UserDTO User = new UserDTO(userId, username, Password, ini, cpr);
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
 
-			return User;
+			List<String> roleList = new ArrayList<String>();
+			while(rs.next()) {
+				userId = rs.getInt("id");
+				userName = rs.getString("username");
+				ini = rs.getString("ini");
+				password = rs.getString("password");
+				cpr = rs.getString("cpr");
+				roleList.add("1");
+			}
+			UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
+			System.out.println("DAO rolelist:");
+			System.out.println("Id: " + userId);
+			System.out.println("Name: " + userName);
+			System.out.println("Password: " + password);
+			System.out.println("Initials: " + ini);
+			System.out.println("CPR: " + cpr + "\n");
+			return user;
 
 		} catch (SQLException e) {
 			// Could not connect to the database
@@ -73,18 +84,22 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
 		List<UserDTO> UserList = new ArrayList<UserDTO>();
-		String query = "SELECT * FROM Users;";
+		List<String> roleList= new ArrayList<>();
+		String query = "SELECT * FROM users;";
 
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query); 
 			while (rs.next()) {
-				String Username = rs.getString("Username");
-				String Password = rs.getString("password");
+				String userName = rs.getString("username");
+				String password = rs.getString("password");
 				String ini = rs.getString("ini");
 				String cpr = rs.getString("cpr");
-				int UserId = rs.getInt("userId");
-				UserDTO user = new UserDTO(UserId, Username, Password, ini, cpr);
+				int userId = rs.getInt("id");
+				String rolesInt = rs.getString("role");
+				roleList.add(rolesInt);
+
+				UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
 				UserList.add(user);
 			}
 			return UserList;
@@ -98,25 +113,36 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void createUser(UserDTO user) throws DALException {
-		String query = "INSERT INTO Users ( username, password, ini, cpr) VALUES(" + "'" + user.getUserName() + "'" + "'" + user.getPassword()+ "'" + "'" + user.getIni() + "'" + "'" + user.getCpr() + "'" + ");";
+		System.out.println("\n----***** DAO: CreateUser: *****----");
+		List<String> roleList = user.getRoles();
+		System.out.println("RoleList:");
+		for (String role : roleList) {System.out.println(role);	}
+		
+		String query = "INSERT INTO users (username, password, ini, cpr, role) "
+				+ "VALUES(" + "'" + user.getUserName() + "'," 
+				+ "'" + user.getPassword() + "'," 
+				+ "'" + user.getIni() + "'," 
+				+ "'" + user.getCpr() + "',"
+				+ "'1' )";
+		System.out.println("SQL query: " + query);
 
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+			stmt.executeUpdate(query);
+			System.out.println("----***** DAO: CreateUser: end *****----");
 
 		} catch (SQLException e) {
 			// Could not connect to the database
 			System.out.println(e.getMessage()); 
 		}
-
 	}
 
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
-		String query = "UPDATE users SET username =" +"'"+ user.getUserName() +"'"+ ", password =" +"'"+ user.getPassword() +"'"+ ", ini =" +"'"+ user.getIni() +"'"+ ",cpr =" +"'"+ user.getCpr() +"'"+ " WHERE id=" + user.getUserId() + ";";
+		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE id='" + user.getUserId() + "'";
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+			stmt.executeUpdate(query);
 
 		} catch (SQLException e) {
 			// Could not connect to the database
@@ -126,17 +152,38 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void deleteUser(int userId) throws DALException {
-		String query = "DELETE FROM users where userId =" +userId+";";
+		String query = "DELETE FROM users where userId ='" + userId + "'";
 
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query); 
+			stmt.executeUpdate(query);
 
 		} catch (SQLException e) {
 			// Could not connect to the database
 			System.out.println(e.getMessage()); 
 		}
 
+	}
+
+	public boolean isUserAndPassCorrect(String usr, String pass) {
+		boolean isMatch = false;
+		String query = "SELECT * FROM users WHERE username='" + usr + "'";
+
+		try {
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				if (rs.getString("password").equals(pass)){
+					isMatch = true;
+				}
+			}
+			return isMatch;
+
+		} catch (SQLException e) {
+			// Could not connect to the database
+			System.out.println(e.getMessage()); 
+			return isMatch;
+		}
 	}
 
 }
