@@ -9,24 +9,44 @@
 <script src="js/login.js"></script>
 </head>
 <body>
-    <div id="createUserContainer">
 		<h1>Create User</h1>
 		<button id="frontPage">Front Page</button>
 		<button id="showUserButton">Show users</button>
 		<button id="logoutButton">Log out</button>
 		<br>
 		<form class="createUserFunction" method="POST">
-			<label> Username </label> <input type="text" name="username" autofocus>
-			<label> Password </label> <input type="password" name="password"> 
-			<label> Initials </label> <input type="text" name="ini"> 
-			<label> CPR-number </label> <input type="text" name="CPR">
-			<label> Role: </label> <br>
-			Admin <input id="1" type="checkbox" name="admin" value="admin">
-			Laborant <input id="2" type="checkbox" name="laborant" value="laborant">
-			Farmaceut <input id="3" type="checkbox" name="farmaceut" value="farmaceut">
-			Produktionsleder <input id="4" type="checkbox" name="prodLeder" value="prodLeder"> 
+			<label> Username </label> 
+					<br>
+				<input type="text" name="username" autofocus>
+					<br>
+			<label> Password </label> 
+					<br>
+				<input type="password" name="password"> 
+					<br>
+			<label> Initials </label> 
+					<br>
+				<input type="text" name="ini"> 
+					<br>
+			<label> CPR-number </label> 
+					<br>
+				<input type="text" name="CPR">
+					<br><br>
+			<label> Choose role: </label> 
+				<br>
+			<input id="1" type="checkbox" name="admin" value=true>
+				<label> - Admin </label>	
+					<br>
+			<input id="2" type="checkbox" name="laborant" value=true>
+				<label> - Laborant </label>	
+					<br>
+			<input id="3" type="checkbox" name="farmaceut" value=true>
+				<label> - Farmaceut </label>
+					<br>
+			<input id="4" type="checkbox" name="produktionsleder" value=true>
+				<label> - Produktionsleder </label>
+					<br>
 		</form>
-		<button id="actuallyCreatingAUser"form="createUserFunction" type="submit">Create User</button>
-	</div>
+		<br>
+		<button id="actuallyCreatingAUser" form="createUserFunction" type="submit"> Create User</button>
 	</body>
 </html>
