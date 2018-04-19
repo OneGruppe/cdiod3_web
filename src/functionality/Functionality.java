@@ -14,9 +14,18 @@ public class Functionality //implements IFunctionality{
 	public void changeUser(int id, String newName, String newPassword, String newIni) {
 
 	}
-
-	public void createUser(String name, String password, String ini, String cpr) {
-
+	
+	@POST
+	@Path("createUser")
+	public void createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr, @FormParam("role") String role){
+		System.out.println(name);
+		System.out.println(password);
+		System.out.println(ini);
+		System.out.println(cpr);
+		System.out.println(role);
+		
+		//UserDTO user = new UserDTO(name, password, ini, cpr, role);
+		//dao.createUser(user);
 	}
 
 	public void deleteUser(int id) {
