@@ -23,7 +23,7 @@ public interface IFunctionality {
 	 * @param cpr of the user
 	 * @throws DALException - exception handling
 	 */
-	void createUser(String name, String password, String ini, String cpr) ;
+	void createUser(String name, String password, String ini, String cpr, String role) ;
 
 	/**
 	 * Deletes a user from disk array.
