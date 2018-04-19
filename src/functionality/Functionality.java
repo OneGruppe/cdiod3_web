@@ -8,7 +8,8 @@ import data.UserDTO;
 import test.*;
 
 @Path("functionality")
-public class Functionality implements IFunctionality{
+public class Functionality //implements IFunctionality{
+	{
 
 	public void changeUser(int id, String newName, String newPassword, String newIni) {
 
@@ -45,7 +46,8 @@ public class Functionality implements IFunctionality{
 
 	@POST
 	@Path("login")
-	public boolean login(@FormParam("username") String usr, @FormParam("password") String pass) {
+	public boolean login(@FormParam("username") String usr, @FormParam("password") String pass, @FormParam("check1") String check1) {
+		System.out.println(check1);
 		TestCon con = new TestCon();
 		con.doConnection();
 		boolean isMatch = con.isUserAndPassCorrect(usr, pass);
