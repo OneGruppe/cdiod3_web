@@ -35,14 +35,15 @@ $(document).ready(function() {
 		$(".loadToDiv").load("adminlogin.html"); 		
 	})
 
-	$("#actuallyCreatingAUser").click(function() {
+	$("#actuallyCreatingAUser").click(function() {		
 		$.ajax({
 			url:"rest/functionality/createUser",
-			data: $('createUserFunction').serialize(),
+			data: $('.createUserFunction').serialize(),
 			contenttype: "application/x-ww-form-urlencoded",
 			method: "POST",
 			success:function(data) {
-				$(".loadToDiv").load("createUser.html");
+				alert("Du har nu sendt information afsted")
+			$(".loadToDiv").load("createUser.html");
 			}
 		})
 
