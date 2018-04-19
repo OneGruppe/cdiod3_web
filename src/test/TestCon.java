@@ -64,17 +64,9 @@ public class TestCon{
 		}
 	}
 	
-//	public void createUser (String username, String password, String ini, String CPR, String role) {
-//		String query = "INSERT INTO users (username, password, ini, cpr, role) VALUES (" + username + password + ini + CPR + role +")";
-//		
-//		try {
-//			
-//		}
-//	}
-	
 	public boolean isUserAndPassCorrect(String usr, String pass) {
 		boolean isMatch = false;
-		String query = "SELECT * FROM users WHERE username='" + usr + "'" + "AND role='1'";
+		String query = "SELECT * FROM users WHERE username='" + usr + "'";
 
 		try {
 			Statement stmt = connection.createStatement();
