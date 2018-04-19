@@ -4,20 +4,30 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
+import data.IUserDAO.DALException;
+import data.UserDAO;
 import data.UserDTO;
 import test.*;
 
 @Path("functionality")
-public class Functionality implements IFunctionality{
+public class Functionality implements IFunctionality {
+	
+	private UserDAO dao;
+
+	public Functionality(UserDAO dao) {
+		this.dao = dao;
+	}
+	
 
 	public void changeUser(int id, String newName, String newPassword, String newIni) {
 
 	}
 
-//	@POST
-//	@Path("createUser")
-	public void createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr, @FormParam("role") String role) {
-//		
+	@POST
+	@Path("createUser")
+	public void createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr, @FormParam("role") String role) throws DALException {
+		UserDTO user = new UserDTO(name, password, ini, cpr, role);
+		dao.createUser(user);
 	}
 
 	public void deleteUser(int id) {

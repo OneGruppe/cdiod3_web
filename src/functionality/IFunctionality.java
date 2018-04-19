@@ -1,6 +1,7 @@
 package functionality;
 
 import data.*;
+import data.IUserDAO.DALException;
 
 public interface IFunctionality {
 	
@@ -23,7 +24,7 @@ public interface IFunctionality {
 	 * @param cpr of the user
 	 * @throws DALException - exception handling
 	 */
-	void createUser(String name, String password, String ini, String cpr, String role) ;
+	void createUser(String name, String password, String ini, String cpr, String role) throws DALException ;
 
 	/**
 	 * Deletes a user from disk array.
