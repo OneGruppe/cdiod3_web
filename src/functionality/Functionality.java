@@ -85,7 +85,7 @@ public class Functionality //implements IFunctionality{
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
 				dao.createUser(newUser);
-				returnValue = "User successfully created";
+				returnValue = "'" + name + "' successfully created";
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -100,26 +100,33 @@ public class Functionality //implements IFunctionality{
 
 	}
 
-	public void deleteUser(String userName) {
-		
+	@POST
+	@Path("deleteUser")
+	public String deleteUser(@FormParam("username") String userName) {
+		String returnString = null;
+		if(userName.equals("*") || userName.equals(" ") || userName.equals("admin")) {
+			return "Ugyldigt input";
+		}
 		try {
 			List<UserDTO> DTOList = dao.getUserList();
 			for(int i = 0; i < DTOList.size(); i++) {
 				if(DTOList.get(i).getUserName().equals(userName)) {
 					dao.deleteUser(userName);
 					System.out.println("User " + userName + " was deleted!");
+					returnString = "User " + userName + " blev slettet!";
+					return returnString;
 				}
 			}
 		} catch (DALException e) {
-			e.printStackTrace();
+			return "'" + userName + "' findes ikke";
 		}	
-
+		return returnString;
 	}
 
 	@POST
 	@Path("showUser")
-	public String showUser(@FormParam("update_username") String name) {
-		String retur = "Det indtastede er: " + name;
+	public String showUser(@FormParam("username") String name) {
+		String retur = "'" + name + "' har været igennem Java, og vises nu her.";
 				System.out.println(retur);
 		return retur;
 	}
