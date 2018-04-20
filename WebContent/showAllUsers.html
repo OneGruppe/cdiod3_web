@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="admin_site.css">
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/subsite_buttons.js"></script>
+<script src="js/showAllUsers.js"></script>
 </head>
 
 	<body>
@@ -26,8 +27,9 @@
 				
 		<div id="showAllUsersContainer">
 			<h3 style="text-align:center;">Showing all users</h3>
-			<table class= "showUsers">
-				<tr>
+		<button id="retrieveAllUsersButton">Retrieve data from server</button>
+			<table class="showUsers">
+				<tr class="table_top">
 					<th>Id</th>
 					<th>Username</th>
 					<th>Password</th>
@@ -35,7 +37,7 @@
 					<th>Cpr</th>
 					<th>Role</th>
 				</tr>
-				<tr>
+				<tr class="table_content">
 					<td>test</td>
 					<td>test</td>
 					<td>test</td>
@@ -43,7 +45,7 @@
 					<td>test</td>
 					<td>test</td>
 				</tr>
-				<tr>
+				<tr class="table_content">
 					<td>test2</td>
 					<td>test2</td>
 					<td>test2</td>
@@ -51,7 +53,7 @@
 					<td>test2</td>
 					<td>test2</td>
 				</tr>
-				<tr>
+				<tr class="table_content">
 					<td>test3</td>
 					<td>test3</td>
 					<td>test3</td>
@@ -59,7 +61,7 @@
 					<td>test3</td>
 					<td>test3</td>
 				</tr>
-				<tr>
+				<tr class="table_content">
 					<td>test4</td>
 					<td>test4</td>
 					<td>test4</td>
@@ -67,7 +69,7 @@
 					<td>test4</td>
 					<td>test4</td>
 				</tr>
-				<tr>
+				<tr class="table_content">
 					<td>test5</td>
 					<td>test5</td>
 					<td>test5</td>

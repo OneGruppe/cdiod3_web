@@ -8,10 +8,11 @@
 <link rel="stylesheet" type="text/css" href="admin_site.css">
 <script src="js/jquery-3.3.1.js"></script>
 <script src="js/subsite_buttons.js"></script>
+<script src="js/showUser.js"></script>
 </head>
 
 	<body>
-		<h1>Show user</h1>
+		<h1>Show User</h1>
 		<h4>Admin login</h4>
 		
 		<div class="adminButtons">
@@ -23,11 +24,17 @@
 			<button>Show user</button>
 			<button id="logoutButton">Log out</button> <br> <br>
 		</div>
+		
+		<form id="targetUsername" method="POST">
+			<label>Name of desired user:</label> 
+			<input type="text" name="update_username" autofocus required>
+			<button id="retrieveUserButton" form="targetUsername" type="submit"> Find User</button> <br>
+		</form>
 				
 		<div id="showAllUsersContainer">
-			<h3 style="text-align:center;">Showing all users</h3>
+			<h3 style="text-align:center;">Showing selected user</h3>
 			<table class="showUsers">
-				<tr>
+				<tr class="table_top">
 					<th>Id</th>
 					<th>Username</th>
 					<th>Password</th>
@@ -35,7 +42,7 @@
 					<th>Cpr</th>
 					<th>Role</th>
 				</tr>
-				<tr>
+				<tr class="table_content">
 					<td>test</td>
 					<td>test</td>
 					<td>test</td>
