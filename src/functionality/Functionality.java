@@ -85,7 +85,7 @@ public class Functionality //implements IFunctionality{
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
 				dao.createUser(newUser);
-				returnValue = "User successfully created";
+				returnValue = "'" + name + "' successfully created";
 			} catch (DALException e) {
 				e.printStackTrace();
 			}
@@ -104,7 +104,7 @@ public class Functionality //implements IFunctionality{
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
 		String returnString = null;
-		if(userName.equals("*") || userName.equals(" ")) {
+		if(userName.equals("*") || userName.equals(" ") || userName.equals("admin")) {
 			return "Ugyldigt input";
 		}
 		try {
@@ -118,8 +118,7 @@ public class Functionality //implements IFunctionality{
 				}
 			}
 		} catch (DALException e) {
-			e.printStackTrace();
-			
+			return "'" + userName + "' findes ikke";
 		}	
 		return returnString;
 	}
