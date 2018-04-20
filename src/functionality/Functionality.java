@@ -99,7 +99,19 @@ public class Functionality //implements IFunctionality{
 
 	}
 
-	public void deleteUser(int id) {
+	public void deleteUser(String userName) {
+		
+		try {
+			List<UserDTO> DTOList = dao.getUserList();
+			for(int i = 0; i < DTOList.size(); i++) {
+				if(DTOList.get(i).getUserName().equals(userName)) {
+					dao.deleteUser(userName);
+					System.out.println("User " + userName + " was deleted!");
+				}
+			}
+		} catch (DALException e) {
+			e.printStackTrace();
+		}	
 
 	}
 

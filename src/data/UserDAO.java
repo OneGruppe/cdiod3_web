@@ -151,8 +151,8 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public void deleteUser(int userId) throws DALException {
-		String query = "DELETE FROM users where userId ='" + userId + "'";
+	public void deleteUser(String userName) throws DALException {
+		String query = "DELETE FROM users where username ='" + userName + "'";
 
 		try {
 			Statement stmt = connection.createStatement();

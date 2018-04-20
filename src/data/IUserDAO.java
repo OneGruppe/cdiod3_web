@@ -32,7 +32,7 @@ public interface IUserDAO {
 	 * @param userId
 	 * @throws DALException
 	 */
-	void deleteUser(int userId) throws DALException;
+	void deleteUser(String userName) throws DALException;
 
 	//Exception-class
 	public class DALException extends Exception {
