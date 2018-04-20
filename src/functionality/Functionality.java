@@ -78,7 +78,7 @@ public class Functionality //implements IFunctionality{
 		}
 		System.out.println("\n ----***** FUNK: CreateUser end *****----");
 
-		if (cpr.matches("\\d{6}\\-\\d{4}") && !name.equals(null) && !password.equals(null) && !ini.equals(null)) {
+		if (cpr.matches("\\d{6}\\-\\d{4}") && !name.equals(null) && !password.equals(null) && !ini.equals(null) && password.length() <= 20) {
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
 				dao.createUser(newUser);
