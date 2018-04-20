@@ -9,7 +9,6 @@ import java.util.List;
 
 import data.*;
 import data.IUserDAO.DALException;
-import test.*;
 
 @Path("functionality")
 public class Functionality //implements IFunctionality{
