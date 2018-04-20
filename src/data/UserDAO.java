@@ -46,7 +46,7 @@ public class UserDAO implements IUserDAO {
 	public UserDTO getUser(String username) throws DALException {
 		System.out.println("*** DAO: getUser '" + username + "' ***");
 		String query = "SELECT * FROM users WHERE username='" + username + "'";
-		int userId = 99999999;
+		int userId = 0;
 		String userName = null;
 		String ini = null;
 		String password = null;
