@@ -42,7 +42,7 @@ $(document).ready(function() {
 			contenttype: "application/x-ww-form-urlencoded",
 			method: "POST",
 			success:function(data) {
-				alert("Du har nu sendt information afsted")
+				alert(data);
 			$(".loadToDiv").load("createUser.html");
 			}
 		})
