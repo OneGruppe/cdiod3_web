@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
 	
-	$("#findUser").click(function() {
+	$("#findUserToUpdate").click(function() {
 		
 		/*$.ajax({
 			url:"rest/functionality/showUser",
