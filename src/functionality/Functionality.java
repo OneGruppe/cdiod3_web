@@ -3,13 +3,11 @@ package functionality;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import data.*;
-import data.IUserDAO.DALException;
-import test.*;
+import data.IUserDAO.*;
 
 @Path("functionality")
 public class Functionality //implements IFunctionality{
