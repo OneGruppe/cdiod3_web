@@ -100,8 +100,13 @@ public class Functionality //implements IFunctionality{
 
 	}
 
+	@POST
+	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
 		String returnString = null;
+		if(userName.equals("*") || userName.equals(" ")) {
+			return "Ugyldigt input";
+		}
 		try {
 			List<UserDTO> DTOList = dao.getUserList();
 			for(int i = 0; i < DTOList.size(); i++) {

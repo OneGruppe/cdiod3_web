@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$("#deleteUser").click(function() {
 		
 		$.ajax({
-			url:"rest/functionality/showUser",
+			url:"rest/functionality/deleteUser",
 			data: $('#targetUsername').serialize(),
 			contenttype: "application/x-ww-form-urlencoded",
 			method: "POST",
