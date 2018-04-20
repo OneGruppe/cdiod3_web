@@ -12,7 +12,7 @@ $(document).ready(function() {
 			method: "POST",
 			success:function(data) {
 				alert(data);
-			$(".loadToDiv").load("createUser.html");
+			$(".loadToDiv").load("html/createUser.html");
 			}
 		})
 

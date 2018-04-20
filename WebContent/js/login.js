@@ -13,7 +13,7 @@ $(document).ready(function() {
 			success:function(data){
 				if(data == "true") {
 					$(".login").hide();
-					$(".loadToDiv").load("adminlogin.html");					
+					$(".loadToDiv").load("html/adminlogin.html");					
 				}
 				else{
 					alert("Password doesn't match username, try again");
