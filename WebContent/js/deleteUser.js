@@ -13,6 +13,7 @@ $(document).ready(function() {
 			method: "POST",
 			success:function(data) {
 				alert(data);
+			$(".loadToDiv").load("deleteUser.html");
 			}
 		})
 				return false;
