@@ -25,15 +25,19 @@ $(document).ready(function() {
 
 	$("#showUserButton").click(function() {
 		$(".loadToDiv").load("showUsers.html");
-	})
+	});
 
 	$("#logoutButton").click(function() {
 		window.location.reload();    		
-	})
+	});
+	
+	$("#updateUserBotton").click(function() {
+		$(".loadToDiv").load("updateUser.html"); 		
+	});
 
 	$("#frontPage").click(function() {
 		$(".loadToDiv").load("adminlogin.html"); 		
-	})
+	});
 
 	$("#actuallyCreatingAUser").click(function() {		
 		$.ajax({
@@ -48,6 +52,7 @@ $(document).ready(function() {
 		})
 
 	});
+	
 	$("#findUser").click(function() {
 		$.ajax({
 			url:"rest/functionality/showUser",
@@ -56,8 +61,9 @@ $(document).ready(function() {
 			method: "POST",
 			success:function(data) {
 				alert(data);
-				$(".loadToDiv").load("createUser.html");
 			}
 		})
-	})
+		return false;
+	});
+	
 });
