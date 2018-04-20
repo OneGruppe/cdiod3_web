@@ -80,12 +80,8 @@ public class Functionality //implements IFunctionality{
 		if (!password.matches("[a-åA-Å0-9]{4,20}$")) {return "Password does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
 		if (!ini.matches("[a-åA-Å]{1,3}$")) {return "Initials does not match a-å or A-Å while being bewteen 1 and 3 characters";}
 		
-		System.out.println("username " + name.matches("[a-åA-Å0-9]{4,20}$"));
-		System.out.println("password " + password.matches("[a-åA-Å0-9]{4,20}$"));
-		System.out.println("ini " + ini.matches("[a-åA-Å]{1,3}$"));
-		System.out.println("cpr " + cpr.matches("\\d{6}\\-\\d{4}"));
-		
-		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[a-åA-Å0-9]{4,20}$") && password.equals("[a-åA-Å0-9]{4,20}$") && ini.equals("[a-åA-Å]{1,3}$")) {
+		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[a-åA-Å0-9]{4,20}$") && password.matches("[a-åA-Å0-9]{4,20}$") && ini.matches("[a-åA-Å]{1,3}$")) {
+			System.out.println("Pikslikker");
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
 				dao.createUser(newUser);
