@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Update User</title>
+<script src="jquery-3.3.1.js"></script>
+<script src="js/login.js"></script>
+</head>
+<body>
+	<div id="searchAndUpdateUser">
+		<form id="targetUsername">
+			<label>Enter the name of the desired user:</label>
+			<input type="text" name="update_username" autofocus> 
+			<button id="findUser">Find User</button>
+		</form>
+	</div>
+	<div id="updateUserContainer">
+		<h1>Update User</h1>
+		<button id="frontPage">Front Page</button>
+		<button id="showUserButton">Show users</button>
+		<button id="logoutButton">Log out</button>
+		<br>
+		<form id="username" method="POST">
+			Username <input type="text" name="username">
+			Password <input type="password" name="password"> Initials <input
+				type="text" name="ini"> CPR-number <input type="text"
+				name="CPR"> Role <input type="text" name="role">
+			<button id="actuallyUpdatingAUser">Update User</button>
+		</form>
+	</div>
+</body>
+</html>
