@@ -113,9 +113,12 @@ public class Functionality //implements IFunctionality{
 
 	}
 
-	public UserDTO showUser(int id) {
-
-		return null;
+	@POST
+	@Path("showUser")
+	public String showUser(@FormParam("update_username") String name) {
+		String retur = "Det indtastede er: " + name;
+				System.out.println(retur);
+		return retur;
 	}
 
 	public String showUserAdmin(int id) {
