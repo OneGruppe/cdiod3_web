@@ -5,30 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Update User</title>
-<script src="jquery-3.3.1.js"></script>
+<script src="js/jquery-3.3.1.js"></script>
 <script src="js/login.js"></script>
 </head>
 <body>
+	<h1>Update User</h1>
+	<button id="frontPage">Front Page</button>
+	<button id="showUserButton">Show users</button>
+	<button id="logoutButton">Log out</button> <br>
+	
+	<br>
+		<form id="targetUsername" method="POST">
+			<label>Name of desired user:</label> 
+			<input type="text" name="update_username" autofocus required>
+			<button id="findUser" form="targetUsername" type="submit"> Find User</button>
+			<br>
+		</form>
+	
 	<div id="searchAndUpdateUser">
-		<form id="targetUsername">
-			<label>Enter the name of the desired user:</label>
-			<input type="text" name="update_username" autofocus> 
-			<button id="findUser">Find User</button>
+	<br>
+		<form class="updateUserContainer" method="POST">
+			<label>Username</label> <br> 
+			<input type="text" name="username"> <br> 
+			<label>Password</label> <br> 
+			<input type="password" name="password"> <br>
+			<label>Initials</label> <br> 
+			<input type="text" name="ini"> <br> 
+			<label>CPR-number</label> <br> 
+			<input type="text" name="CPR"> <br> <br> 
+			<label>Choose role:</label> <br> 
+			<input id="1" type="checkbox" name="admin"	value=true> 
+				<label> - Admin </label> <br> 
+			<input id="2" type="checkbox" name="laborant" value=true> 
+				<label> - Laborant </label> <br> 
+			<input id="3" type="checkbox" name="farmaceut"	value=true> 
+				<label> - Farmaceut </label> <br> 
+			<input id="4" type="checkbox" name="produktionsleder" value=true> 
+				<label>	- Produktionsleder </label> <br>
 		</form>
-	</div>
-	<div id="updateUserContainer">
-		<h1>Update User</h1>
-		<button id="frontPage">Front Page</button>
-		<button id="showUserButton">Show users</button>
-		<button id="logoutButton">Log out</button>
 		<br>
-		<form id="username" method="POST">
-			Username <input type="text" name="username">
-			Password <input type="password" name="password"> Initials <input
-				type="text" name="ini"> CPR-number <input type="text"
-				name="CPR"> Role <input type="text" name="role">
-			<button id="actuallyUpdatingAUser">Update User</button>
-		</form>
+		<button id="actuallyCreatingAUser" form="createUserFunction" type="submit">Update User</button>
 	</div>
 </body>
 </html>
