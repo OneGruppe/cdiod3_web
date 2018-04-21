@@ -106,6 +106,7 @@ input {
 }
 
 .table_top {
+	font-weight: bold;
 	background-color: #ddddd0;
 }
 
