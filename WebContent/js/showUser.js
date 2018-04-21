@@ -8,8 +8,8 @@ $(document).ready(function() {
 		/*
 		$.ajax({
 			url:"rest/functionality/showUser",
-			data: $('#targetUsername').serialize(),
-			contenttype: "application/x-ww-form-urlencoded",
+			data: $('#showUser_search').serialize(),
+			contenttype: "multipart/form-data",
 			method: "POST",
 			success:function(data) {
 				alert(data);
