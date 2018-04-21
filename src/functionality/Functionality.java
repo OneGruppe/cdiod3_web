@@ -28,13 +28,14 @@ public class Functionality //implements IFunctionality{
 		UserDTO user = null;
 		try {
 			user = dao.getUser(usr);
+			if (user.getUserName() == null) {return isMatch;}
+			if (user.getPassword().equals(pass)) {isMatch = true;}
+			System.out.println("Funktionality login with " + usr + " " + isMatch);
+			return isMatch;
 		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Der skete en fejl: " + e.getMessage());
+			return isMatch;
 		}
-		if (user.getPassword().equals(pass)) {isMatch = true;}
-		System.out.println("Funktionality-login: " + isMatch);
-		return isMatch;
 	}
 
 	@POST
