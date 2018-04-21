@@ -1,26 +1,57 @@
-
 body {
-  background-color: #f9f6e8;
-  
+	background-color: #d0d7dd;
 }
 
-.loadToDiv{
-  width: 1140px;
-  margin-left: auto;
-  margin-right: auto;
-  }
-  
-.adminButtons{
-  width: 585px;
-  height: 10px;
-  padding-top: 1px;
-  padding-left: 1px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #fff;
-  border: 2px solid black;
-  border-radius: 10px;
-  font-family: sans-serif;
+h1, h2, h3, h4, h5, h6 {
+	color: #383838;
+}
+
+h4 {
+	margin-bottom: 75px;
+}
+
+.loadToDiv {
+	width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.adminButtons {
+	position: fixed;
+	width: 720px;
+	height: 10px;
+	top: 115px;
+	padding-top: 7px;
+	padding-left: 1px;
+	padding-bottom: 20px;
+	background-color: #e3e9ef;
+	border: 1.5px solid #383838;
+	border-radius: 10px;
+	font-family: sans-serif;
+	display: inline;
+}
+
+button {
+	width: 90px;
+	height: 20px;
+	background-color: #1d5284;
+	color: white;
+	border: .5px solid black;
+	border-radius: 7px;
+	margin-left: 7px;
+}
+
+button:hover {
+	cursor: pointer;
+	background-color: #023b70;
+	color: #edcbcb;
+}
+
+#retrieveAllUsersButton {
+	float: left;
+	margin-left: 0;
+	width: 180px;
+	height: 30px;
 }
 
 label {
@@ -28,50 +59,55 @@ label {
 }
 
 .login {
-  width: 280px;
-  height: 100px;
-  background-color: #fff;
-  border: 1px solid black;
-  border-radius: 5px;
-  box-shadow: 5px 20px 50px;
-  font-family: sans-serif;
-  padding: 25px;
-  padding-bottom: 90px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 15%;
-  margin-bottom: auto;
+	width: 280px;
+	height: 100px;
+	background-color: #fff;
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 5px 20px 50px;
+	font-family: sans-serif;
+	padding: 25px;
+	padding-bottom: 90px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15%;
+	margin-bottom: auto;
 }
 
 form {
-  display: table;
+	display: table;
+}
+
+input {
+	margin-left: 5px;	
 }
 
 #username {
-  margin-left: 25px;
-  margin-bottom: 20px;
+	margin-left: 25px;
+	margin-bottom: 20px;
 }
 
 #password {
-  margin-left: 25px;
+	margin-left: 25px;
 }
 
 .showUsers {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
+	margin-top: 65px;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .table_top {
-	background-color: #dddddd;
+	background-color: #ddddd0;
 }
 
 .table_content {
-	background-color: white;
+	background-color: rgba(255, 255, 255, .4);
 }
 
 td, th {
-    border: 1px solid #606060;
-    text-align: left;
-    padding: 10px;
+	border: 1px solid #606060;
+	text-align: left;
+	padding: 10px;
 }
