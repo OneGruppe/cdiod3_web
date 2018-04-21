@@ -44,6 +44,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public UserDTO getUser(String username) throws DALException {
+		System.out.println("-----------------------DAO----------------------------");
 		System.out.println("*** DAO: getUser '" + username + "' ***");
 		String query = "SELECT * FROM users WHERE username='" + username + "'";
 		int userId = 0;
@@ -72,6 +73,7 @@ public class UserDAO implements IUserDAO {
 			System.out.println("Password: " + password);
 			System.out.println("Initials: " + ini);
 			System.out.println("CPR: " + cpr + "\n");
+			System.out.println("---------------------DAO-END--------------------------");
 			return user;
 
 		} catch (SQLException e) {
