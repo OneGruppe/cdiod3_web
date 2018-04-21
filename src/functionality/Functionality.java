@@ -23,7 +23,6 @@ public class Functionality //implements IFunctionality{
 	@POST
 	@Path("login")
 	public boolean login(@FormParam("username") String usr, @FormParam("password") String pass) {
-		//boolean isMatch = dao.isUserAndPassCorrect(usr, pass);
 		boolean isMatch = false;
 		UserDTO user = null;
 		try {

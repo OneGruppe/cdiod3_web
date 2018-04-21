@@ -167,25 +167,4 @@ public class UserDAO implements IUserDAO {
 
 	}
 
-	public boolean isUserAndPassCorrect(String usr, String pass) {
-		boolean isMatch = false;
-		String query = "SELECT * FROM users WHERE username='" + usr + "'";
-
-		try {
-			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				if (rs.getString("password").equals(pass)){
-					isMatch = true;
-				}
-			}
-			return isMatch;
-
-		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage()); 
-			return isMatch;
-		}
-	}
-
 }
