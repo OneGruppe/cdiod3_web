@@ -5,32 +5,20 @@
 $(document).ready(function() {
 	
 	$("#retrieveUserButton").click(function() {
-		/*
 		$.ajax({
 			url:"rest/functionality/showUser",
 			data: $('#showUser_search').serialize(),
 			contenttype: "multipart/form-data",
 			method: "POST",
-			success:function(data) {
-				alert(data);
+			success:function(resultData) {
+				var x = []
+				x = resultData;
+				for (i = 0 ; i <= 2 ; i++){
+					var retString = x[i];
+				alert(retString);
+				}
 			}
 		})
-		alert("An error occured")
 		return false;
-		*/
-		
-		$.ajax({
-		    type: "GET",
-		    url: "rest/functionality/getjson",
-		    data: $('#targetUsername').serialize(),
-		    dataType: "json", // Set the data type so jQuery can parse it for you
-		    success: function (data) {
-		        document.getElementById("loadToDiv").innerHTML.getElementById("name").innerHTML = data[0];
-		        document.getElementById("loadToDiv").innerHTML.getElementById("age").innerHTML = data[1];
-		        document.getElementById("loadToDiv").innerHTML.getElementById("location").innerHTML = data[2];
-		    }
-		})
-		return false;
-		
 	});
 });
