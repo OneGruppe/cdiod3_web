@@ -18,38 +18,145 @@ $(document).ready(function() {
 				return false;
 				*/
 		
-		//create a form
-		var f = document.createElement("form");
-		f.setAttribute('method',"post");
-
-		//create input element
-		var i = document.createElement("input");
-		i.type = "text";
-		i.name = "user_name";
-		i.id = "user_name1";
-
-		//create a checkbox
-		var c = document.createElement("input");
-		c.type = "checkbox";
-		c.id = "checkbox1";
-		c.name = "check1";
-
-		//create a button
-		var s = document.createElement("input");
-		s.type = "submit";
-		s.value = "Submit";
-
-		// add all elements to the form
-		f.appendChild(i);
-		f.appendChild(c);
-		f.appendChild(s);
-
-		// add the form inside the body
-		$("body").append(f);   //using jQuery or
-		document.getElementsById('body')[0].appendChild(f); //pure javascript
-		var x = document.getElementsById('body');
-		x = f;
-
+		var c, r, t;
+	    t = document.createElement('table');
+	    t.setAttribute('class',"showAllUsers_table");
+	    r = t.insertRow(0);
+	    r.setAttribute('class',"table_top")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Id";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Username";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Password";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Ini";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Cpr";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Role";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    r = t.insertRow(1);
+	    r.setAttribute('class',"table_content")
+	    c = r.insertCell(0);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(1);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(2);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(3);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(4);
+	    c.innerHTML = "Test";
+	    c = r.insertCell(5);
+	    c.innerHTML = "Test";
+	    
+	    document.getElementById("showAllUsersContainer").appendChild(t);
 	});
 	
 });

@@ -91,7 +91,14 @@ input {
 	margin-left: 25px;
 }
 
-.showUsers {
+.showUser_table {
+	margin-top: 65px;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.showAllUsers_table{
 	margin-top: 65px;
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
