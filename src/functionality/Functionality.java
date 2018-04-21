@@ -55,7 +55,7 @@ public class Functionality //implements IFunctionality{
 				return "Username, ini or CPR already exists";
 			}
 		}
-
+		System.out.println("-----------------------FUNK----------------------------");
 		System.out.println("----***** FUNK: CreateUser: *****----");
 		System.out.println("Name: " + name);
 		System.out.println("Password: " + password);
@@ -75,7 +75,7 @@ public class Functionality //implements IFunctionality{
 		for(String role : roleList) {
 			System.out.println(role);
 		}
-		System.out.println("\n ----***** FUNK: CreateUser end *****----");
+		System.out.println("--------------------FUNK-END---------------------------");
 		if (!cpr.matches("\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
 		if (!name.matches("[a-åA-Å0-9]{4,20}$")) {return "Username does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
 		if (!password.matches("[a-åA-Å0-9]{4,20}$")) {return "Password does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
@@ -126,9 +126,12 @@ public class Functionality //implements IFunctionality{
 
 	@POST
 	@Path("showUser")
-	public String showUser(@FormParam("username") String name) {
-		String retur = "'" + name + "' har været igennem Java, og vises nu her.";
-				System.out.println(retur);
+	public String[] showUser(@FormParam("username") String name) {
+		String retur[] = new String[2]; 
+		retur[0]= "'" + name + "' har været igennem Java, og vises nu her.";
+		retur[1] = "hej";
+				System.out.println(retur[0]);
+				System.out.println(retur[1]);
 		return retur;
 	}
 
