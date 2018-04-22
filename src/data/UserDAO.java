@@ -188,10 +188,10 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public void deleteUser(String userName, String password) throws DALException {
+	public void deleteUser(String userName) throws DALException {
 		System.out.println("-------------------DAO - deleteUser(" + userName + ")-------------------");
 		int userId = getUserId(userName);
-		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "', password='" + password + "'";
+		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "'";
 		String rolesusersQuery = "DELETE FROM roles_users WHERE users_id='" + userId + "'";
 		try {
 			Statement stmt = connection.createStatement();
