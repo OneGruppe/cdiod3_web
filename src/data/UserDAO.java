@@ -135,9 +135,9 @@ public class UserDAO implements IUserDAO {
 				UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
 				userList.add(user);
 			}
-			System.out.println("Users gotten from server:");
+			/*System.out.println("Users gotten from server:");
 			for(UserDTO user : userList) {System.out.println(user.toString());}
-			System.out.println("");
+			System.out.println("");*/
 			return userList;
 
 		} catch (SQLException e) {
