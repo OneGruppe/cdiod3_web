@@ -108,8 +108,8 @@ public class Functionality //implements IFunctionality{
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
 		System.out.println("------------------FUNCTIONALITY--deleteUser()------------------");
-		String returnString = "An error occurred";
-		if(userName.equals("*") || userName.equals(" ") || userName.equals("admin")) {
+		String returnString = "'" + userName + "' findes ikke";
+		if(userName.equals("admin")) {
 			return "Ugyldigt input";
 		}
 		try {
@@ -125,7 +125,7 @@ public class Functionality //implements IFunctionality{
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
 			System.out.println("\n");
-			return "'" + userName + "' findes ikke";
+			return "An error occurred";
 		}
 		System.out.println("\n");
 		return returnString;
