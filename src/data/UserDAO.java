@@ -22,7 +22,8 @@ public class UserDAO implements IUserDAO {
 	String userName = "Eclipse-bruger"; 
 	String password = "ySmTL37uDjYZmzyn";
 
-	public boolean doConnection(){ 
+	@Override
+	public boolean doConnection() throws DALException{ 
 		try {
 			// Load the JDBC driver
 			Class.forName(driverName);
@@ -31,13 +32,23 @@ public class UserDAO implements IUserDAO {
 			connection = DriverManager.getConnection(url, userName, password);
 
 		} catch (ClassNotFoundException e) {
-			// Could not find the database driver 
-			System.out.println("ClassNotFoundException : "+e.getMessage());
-			return false;
+			throw new DALException("ClassNotFoundException: in doConnection(): " + e.getMessage());
 		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage()); 
-			return false;
+			throw new DALException("SQLException in doConnection() : " + e.getMessage());
+		}
+		return true; 
+	}
+	
+	@Override
+	public boolean closeConnection() throws DALException { 
+		try {
+			connection.close();
+			Class.forName(driverName);
+
+		} catch (ClassNotFoundException e) {
+			throw new DALException("ClassNotFoundException in closeConnection(): " + e.getMessage());
+		} catch (SQLException e) {
+			throw new DALException("SQLException in closeConnection(): " + e.getMessage());
 		}
 		return true; 
 	}
@@ -63,9 +74,7 @@ public class UserDAO implements IUserDAO {
 			return userId;
 
 		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage());
-			return userId;
+			throw new DALException("SQLException in getUserId(): " + e.getMessage());
 		}
 	}
 	
@@ -85,6 +94,8 @@ public class UserDAO implements IUserDAO {
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<String> roleList = new ArrayList<String>();
+			if(rs.wasNull()) {throw new DALException("Der er ingen bruger med dette navn");}
+			
 			while(rs.next()) {
 				userId = rs.getInt("user_id");
 				userName = rs.getString("username");
@@ -104,9 +115,7 @@ public class UserDAO implements IUserDAO {
 			return user;
 
 		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage());
-			return null;
+			throw new DALException("SQLException in getUser(): " + e.getMessage());
 		}
 	}
 
