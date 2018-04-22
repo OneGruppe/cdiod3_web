@@ -108,7 +108,7 @@ public class Functionality //implements IFunctionality{
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
 		System.out.println("------------------FUNCTIONALITY--deleteUser()------------------");
-		String returnString = null;
+		String returnString = "An error occurred";
 		if(userName.equals("*") || userName.equals(" ") || userName.equals("admin")) {
 			return "Ugyldigt input";
 		}
@@ -117,8 +117,8 @@ public class Functionality //implements IFunctionality{
 			for(int i = 0; i < DTOList.size(); i++) {
 				if(DTOList.get(i).getUserName().equals(userName)) {
 					dao.deleteUser(userName);
-					System.out.println("User " + userName + " was deleted!");
-					returnString = "User " + userName + " blev slettet!";
+					returnString = "User " + userName + " was deleted";
+					System.out.println("\n");
 					return returnString;
 				}
 			}
