@@ -1,12 +1,16 @@
 package functionality;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
-import data.*;
-import data.IUserDAO.*;
+
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+
+import data.IUserDAO.DALException;
+import data.UserDAO;
+import data.UserDTO;
 
 @Path("functionality")
 public class Functionality //implements IFunctionality{
@@ -99,9 +103,36 @@ public class Functionality //implements IFunctionality{
 		System.out.println("\n");
 			return returnValue;
 		}
-
-	public void changeUser(int id, String newName, String newPassword, String newIni) {
-		
+	
+	@POST
+	@Path("updateUser")
+	public String changeUser(@FormParam("username") String userName, @FormParam("newName") String newName, @FormParam("newPassword") String newPassword, @FormParam("newIni") String newIni) {
+		System.out.println("------------------FUNCTIONALITY--updateUser()------------------");
+		String returnString = "'" + userName + "' doesn't exist";
+		if(userName.equals("admin")) {
+			return "Invalid input";
+		}
+		try {
+			UserDTO user = dao.getUser(userName);
+			System.out.println("Found user " +userName+ "\n");		
+			
+			user.setUserName(newName);
+			user.setPassword(newPassword);
+			user.setIni(newIni);
+			
+			dao.updateUser(user);
+			
+			System.out.println("\nUser " +userName+ " was modified to " +user.getUserName());
+			
+			returnString = "User " +userName+ " was succesfully modified";
+			System.out.println("\n");
+			return returnString;
+			
+		} catch (DALException e) {
+			System.out.println(e.getMessage());
+			System.out.println("\n");
+			return "An error occurred";
+		}
 	}
 
 	@POST
