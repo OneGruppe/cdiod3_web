@@ -8,6 +8,10 @@ public interface IUserDAO {
 	
 	int getUserId(String username) throws DALException;
 	
+	boolean doConnection() throws DALException;
+
+	boolean closeConnection() throws DALException;
+	
 	/**
 	 * Gets list of users from disk
 	 * @return list of user objects
