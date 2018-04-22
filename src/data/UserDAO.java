@@ -90,7 +90,7 @@ public class UserDAO implements IUserDAO {
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<String> roleList = new ArrayList<String>();
-			if(rs.wasNull()) {throw new DALException("Der er ingen bruger med dette navn");}
+			if(rs.wasNull()) {throw new DALException("No users with this name exists");}
 			
 			while(rs.next()) {
 				userId = rs.getInt("user_id");
