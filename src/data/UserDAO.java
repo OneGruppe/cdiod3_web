@@ -192,17 +192,15 @@ public class UserDAO implements IUserDAO {
 		System.out.println("-------------------DAO - deleteUser(" + userName + ")-------------------");
 		int userId = getUserId(userName);
 		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "'";
-		String rolesusersQuery = "DELETE FROM roles_users WHERE users_id='" + userId + "'";
 		try {
 			Statement stmt = connection.createStatement();
-			//stmt.executeUpdate(rolesusersQuery);
 			stmt.executeUpdate(usersQuery);
 			System.out.println("");
-
 		} catch (SQLException e) {
 			throw new DALException("SQLException in deleteUser(): " + e.getMessage());
-		}
 
+
+		}
 	}
 
 }
