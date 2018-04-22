@@ -11,11 +11,14 @@ $(document).ready(function() {
 			contenttype: "application/x-ww-form-urlencoded",
 			method: "POST",
 			success:function(data) {
-				alert(data);
+				if(data==="User successfully created"){
+					alert(data);
 			$(".loadToDiv").load("html/createUser.html");
+				}
+				else{alert(data);}
 			}
 		})
-
+		return false;
 	});
 	
 });
