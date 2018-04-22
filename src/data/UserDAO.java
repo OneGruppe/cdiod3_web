@@ -46,7 +46,7 @@ public class UserDAO implements IUserDAO {
 	public UserDTO getUser(String username) throws DALException {
 		System.out.println("-----------------------DAO----------------------------");
 		System.out.println("*** DAO: getUser '" + username + "' ***");
-		String query = "SELECT * FROM users WHERE username='" + username + "'";
+		String query = "SELECT * FROM totalView WHERE users.username='" + username + "'";
 		int userId = 0;
 		String userName = null;
 		String ini = null;
@@ -59,20 +59,20 @@ public class UserDAO implements IUserDAO {
 
 			List<String> roleList = new ArrayList<String>();
 			while(rs.next()) {
-				userId = rs.getInt("id");
+				userId = rs.getInt("user_id");
 				userName = rs.getString("username");
-				ini = rs.getString("ini");
 				password = rs.getString("password");
 				cpr = rs.getString("cpr");
-				roleList.add("1");
+				ini = rs.getString("ini");
+				roleList.add(rs.getString("role_id"));
 			}
 			UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
-			System.out.println("DAO rolelist:");
 			System.out.println("Id: " + userId);
 			System.out.println("Name: " + userName);
 			System.out.println("Password: " + password);
+			System.out.println("CPR: " + cpr);
 			System.out.println("Initials: " + ini);
-			System.out.println("CPR: " + cpr + "\n");
+			for(String role : roleList) {System.out.println("Role:" + role);}
 			System.out.println("---------------------DAO-END--------------------------");
 			return user;
 
@@ -87,19 +87,24 @@ public class UserDAO implements IUserDAO {
 	public List<UserDTO> getUserList() throws DALException {
 		List<UserDTO> UserList = new ArrayList<UserDTO>();
 		List<String> roleList= new ArrayList<>();
-		String query = "SELECT * FROM users;";
-
+		String query = "SELECT * FROM totalView WHERE NOT username='admin'";
+		int userId = 0;
+		String userName = null;
+		String password = null;
+		String ini = null;
+		String cpr = null;
+		String roles = null;
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query); 
 			while (rs.next()) {
-				String userName = rs.getString("username");
-				String password = rs.getString("password");
-				String ini = rs.getString("ini");
-				String cpr = rs.getString("cpr");
-				int userId = rs.getInt("id");
-				String rolesInt = rs.getString("role");
-				roleList.add(rolesInt);
+				userId = rs.getInt("user_id");
+				userName = rs.getString("username");
+				password = rs.getString("password");
+				ini = rs.getString("ini");
+				cpr = rs.getString("cpr");
+				roles = rs.getString("role");
+				roleList.add(rs.getString("role_id"));
 
 				UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
 				UserList.add(user);
@@ -117,20 +122,29 @@ public class UserDAO implements IUserDAO {
 	public void createUser(UserDTO user) throws DALException {
 		System.out.println("\n----***** DAO: CreateUser: *****----");
 		List<String> roleList = user.getRoles();
-		System.out.println("RoleList:");
-		for (String role : roleList) {System.out.println(role);	}
+		System.out.println("Id: " + user.getUserId());
+		System.out.println("Name: " + user.getUserName());
+		System.out.println("Password: " + user.getPassword());
+		System.out.println("CPR: " + user.getCpr());
+		System.out.println("Initials: " + user.getIni());
+		for (String role : roleList) {System.out.println("Role: " + role);}
 		
-		String query = "INSERT INTO users (username, password, ini, cpr, role) "
+		String userQuery = "INSERT INTO users (username, password, ini, cpr) "
 				+ "VALUES(" + "'" + user.getUserName() + "'," 
 				+ "'" + user.getPassword() + "'," 
 				+ "'" + user.getIni() + "'," 
-				+ "'" + user.getCpr() + "',"
-				+ "'1' )";
-		System.out.println("SQL query: " + query);
+				+ "'" + user.getCpr() + "')";
+		System.out.println("SQL query: " + userQuery);
 
 		try {
 			Statement stmt = connection.createStatement();
-			stmt.executeUpdate(query);
+			stmt.executeUpdate(userQuery);
+			/*UserDTO createdUser = getUser(user.getUserName());
+			int createdUserId = createdUser.getUserId();
+			for (String role : roleList) {
+				stmt.executeUpdate("INSERT INTO roles_users VALUES (" + role + ", " + createdUserId + ")");
+			} */
+			
 			System.out.println("----***** DAO: CreateUser: end *****----");
 
 		} catch (SQLException e) {

@@ -28,7 +28,11 @@ public class Functionality //implements IFunctionality{
 		try {
 			user = dao.getUser(usr);
 			if (user.getUserName() == null) {return isMatch;}
-			if (user.getPassword().equals(pass)) {isMatch = true;}
+			else if (user.getPassword().equals(pass)) {
+				for (String role : user.getRoles()) {
+					if (role.equals("1")){isMatch = true;}
+				}
+			}
 			System.out.println("Funktionality login with " + usr + " " + isMatch);
 			return isMatch;
 		} catch (DALException e) {
@@ -79,7 +83,7 @@ public class Functionality //implements IFunctionality{
 		if (!name.matches("[a-åA-Å0-9]{4,20}$")) {return "Username does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
 		if (!password.matches("[a-åA-Å0-9]{4,20}$")) {return "Password does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
 		if (!ini.matches("[a-åA-Å]{1,3}$")) {return "Initials does not match a-å or A-Å while being bewteen 1 and 3 characters";}
-		
+
 		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[a-åA-Å0-9]{4,20}$") && password.matches("[a-åA-Å0-9]{4,20}$") && ini.matches("[a-åA-Å]{1,3}$")) {
 			System.out.println("Pikslikker");
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
@@ -129,8 +133,8 @@ public class Functionality //implements IFunctionality{
 		String retur[] = new String[2]; 
 		retur[0]= "'" + name + "' har været igennem Java, og vises nu her.";
 		retur[1] = "hej";
-				System.out.println(retur[0]);
-				System.out.println(retur[1]);
+		System.out.println(retur[0]);
+		System.out.println(retur[1]);
 		return retur;
 	}
 
