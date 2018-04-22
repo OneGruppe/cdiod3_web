@@ -108,7 +108,9 @@ public class UserDTO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "ID: " + userId + ", name: " + userName + ", initials: " + ini;
+		String returnString = "Id: " + userId + ", Username: " + userName + ", Initials: " + ini + ", Roles:";
+		for (String role : roles) {returnString += role + "-";}
+		return returnString;
 	}
 	
 }
