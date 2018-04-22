@@ -23,6 +23,7 @@ public class Functionality //implements IFunctionality{
 	@POST
 	@Path("login")
 	public boolean login(@FormParam("username") String usr, @FormParam("password") String pass) {
+		System.out.println("------------------FUNCTIONALITY--login()-----------------");
 		boolean isMatch = false;
 		UserDTO user = null;
 		try {
@@ -33,10 +34,12 @@ public class Functionality //implements IFunctionality{
 					if (role.equals("1")){isMatch = true;}
 				}
 			}
-			System.out.println("Funktionality login with " + usr + " " + isMatch);
+			System.out.println("UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch);
+			System.out.println("\n");
 			return isMatch;
 		} catch (DALException e) {
 			System.out.println("Der skete en fejl: " + e.getMessage());
+			System.out.println("\n");
 			return isMatch;
 		}
 	}
@@ -44,6 +47,7 @@ public class Functionality //implements IFunctionality{
 	@POST
 	@Path("createUser")
 	public String createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr, @FormParam("admin") boolean admin, @FormParam("laborant") boolean laborant, @FormParam("farmaceut") boolean farmaceut, @FormParam("produktionsleder") boolean produktionsleder){
+		System.out.println("------------------FUNCTIONALITY--createUser()------------------");
 		String returnValue = "Error in src/functionality/functionality/createUser";
 		List<String> roleList = new ArrayList<String>();
 		List<UserDTO> DTOList = null;
@@ -57,6 +61,8 @@ public class Functionality //implements IFunctionality{
 			if (DTOList.get(j).getUserName().equals(name) || DTOList.get(j).getIni().equals(ini) || DTOList.get(j).getCpr().equals(cpr)) {
 				return "Username, ini or CPR already exists";
 			}
+			System.out.println(e1.getMessage());
+			System.out.println("\n");
 		}
 		System.out.println("-----------------------FUNK----------------------------");
 		System.out.println("----***** FUNK: CreateUser: *****----");
@@ -78,14 +84,12 @@ public class Functionality //implements IFunctionality{
 		for(String role : roleList) {
 			System.out.println(role);
 		}
-		System.out.println("--------------------FUNK-END---------------------------");
 		if (!cpr.matches("\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
 		if (!name.matches("[a-åA-Å0-9]{4,20}$")) {return "Username does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
 		if (!password.matches("[a-åA-Å0-9]{4,20}$")) {return "Password does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
 		if (!ini.matches("[a-åA-Å]{1,3}$")) {return "Initials does not match a-å or A-Å while being bewteen 1 and 3 characters";}
 
 		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[a-åA-Å0-9]{4,20}$") && password.matches("[a-åA-Å0-9]{4,20}$") && ini.matches("[a-åA-Å]{1,3}$")) {
-			System.out.println("Pikslikker");
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
 				dao.createUser(newUser);
@@ -96,6 +100,7 @@ public class Functionality //implements IFunctionality{
 		}
 		else {
 			returnValue = "User not created, try again";
+		System.out.println("\n");
 		}
 		return returnValue;
 	}
@@ -107,6 +112,7 @@ public class Functionality //implements IFunctionality{
 	@POST
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
+		System.out.println("------------------FUNCTIONALITY--deleteUser()------------------");
 		String returnString = null;
 		if(userName.equals("*") || userName.equals(" ") || userName.equals("admin")) {
 			return "Ugyldigt input";
@@ -122,19 +128,24 @@ public class Functionality //implements IFunctionality{
 				}
 			}
 		} catch (DALException e) {
+			System.out.println(e.getMessage());
+			System.out.println("\n");
 			return "'" + userName + "' findes ikke";
-		}	
+		}
+		System.out.println("\n");
 		return returnString;
 	}
 
 	@POST
 	@Path("showUser")
 	public String[] showUser(@FormParam("username") String name) {
+		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
 		String retur[] = new String[2]; 
 		retur[0]= "'" + name + "' har været igennem Java, og vises nu her.";
 		retur[1] = "hej";
 		System.out.println(retur[0]);
 		System.out.println(retur[1]);
+		System.out.println("\n");
 		return retur;
 	}
 
