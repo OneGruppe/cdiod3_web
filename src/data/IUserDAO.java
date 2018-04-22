@@ -6,6 +6,8 @@ public interface IUserDAO {
 
 	UserDTO getUser(String userName) throws DALException;
 	
+	int getUserId(String username) throws DALException;
+	
 	/**
 	 * Gets list of users from disk
 	 * @return list of user objects
