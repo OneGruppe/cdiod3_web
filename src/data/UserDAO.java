@@ -63,14 +63,11 @@ public class UserDAO implements IUserDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			
 			while(rs.next()) {
 				userId = rs.getInt("user_id");
 			}
 			System.out.println("Id: " + userId);
-			
-			System.out.println(userId);
-			System.out.println("---------------------DAO-END--------------------------");
+			System.out.println("");
 			return userId;
 
 		} catch (SQLException e) {
@@ -80,8 +77,7 @@ public class UserDAO implements IUserDAO {
 	
 	@Override
 	public UserDTO getUser(String username) throws DALException {
-		System.out.println("-----------------------DAO-getUser-----------------------");
-		System.out.println("*** DAO: getUser '" + username + "' ***");
+		System.out.println("-------------------DAO - getUser(" + username + ")-------------------");
 		String query = "SELECT * FROM totalView WHERE username='" + username + "'";
 		int userId = 0;
 		String userName = null;
@@ -104,14 +100,9 @@ public class UserDAO implements IUserDAO {
 				ini = rs.getString("ini");
 				roleList.add(rs.getString("role_id"));
 			}
-			System.out.println("Id: " + userId);
-			System.out.println("Name: " + userName);
-			System.out.println("Password: " + password);
-			System.out.println("CPR: " + cpr);
-			System.out.println("Initials: " + ini);
-			for(String role : roleList) {System.out.println("Role:" + role);}
 			UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
-			System.out.println("---------------------DAO-END--------------------------");
+			System.out.println(user.toString());
+			System.out.println("");
 			return user;
 
 		} catch (SQLException e) {
@@ -121,7 +112,8 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
-		List<UserDTO> UserList = new ArrayList<UserDTO>();
+		System.out.println("-------------------DAO - getUserList-------------------");
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 		List<String> roleList= new ArrayList<>();
 		String query = "SELECT * FROM totalView WHERE NOT username='admin'";
 		int userId = 0;
@@ -141,28 +133,24 @@ public class UserDAO implements IUserDAO {
 				roleList.add(rs.getString("role_id"));
 
 				UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
-				UserList.add(user);
+				userList.add(user);
 			}
-			return UserList;
+			System.out.println("Users gotten from server:");
+			for(UserDTO user : userList) {System.out.println(user.toString());}
+			System.out.println("");
+			return userList;
 
 		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage()); 
-			return null;
+			throw new DALException("SQLException in getUserList(): " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void createUser(UserDTO user) throws DALException {
-		System.out.println("\n----***** DAO: CreateUser: *****----");
+		System.out.println("-------------------DAO - createUser-------------------");
+		System.out.println("--- " + user.toString() + " ---");
 		List<String> roleList = user.getRoles();
-		System.out.println("Id: " + user.getUserId());
-		System.out.println("Name: " + user.getUserName());
-		System.out.println("Password: " + user.getPassword());
-		System.out.println("CPR: " + user.getCpr());
-		System.out.println("Initials: " + user.getIni());
-		for (String role : roleList) {System.out.println("Role: " + role);}
-		
+
 		String userQuery = "INSERT INTO users (username, password, ini, cpr) "
 				+ "VALUES(" + "'" + user.getUserName() + "'," 
 				+ "'" + user.getPassword() + "'," 
@@ -174,45 +162,45 @@ public class UserDAO implements IUserDAO {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(userQuery);
 			for (String role : roleList) {
-				stmt.executeUpdate("INSERT INTO roles_users VALUES (" + role + ", " + getUserId(user.getUserName()) + ")");
+				Statement stmt2 = connection.createStatement();
+				stmt2.executeUpdate("INSERT INTO roles_users VALUES (" + role + ", " + getUserId(user.getUserName()) + ")");
+				System.out.println("INSERT INTO roles_users VALUES (" + role + ", " + getUserId(user.getUserName()) + ")");
+				System.out.println("");
 			}
-			
-			System.out.println("----***** DAO: CreateUser: end *****----");
 
 		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage()); 
+			throw new DALException("SQLException in createUser(): " + e.getMessage());
 		}
 	}
 
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
+		System.out.println("-------------------DAO - updateUser-------------------");
+		System.out.println("--- " + user.toString() + " ---");
 		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE id='" + user.getUserId() + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(query);
-
+			System.out.println("");
 		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage()); 
+			throw new DALException("SQLException in updateUser(): " + e.getMessage());
 		}
 	}
 
 	@Override
-	public void deleteUser(String userName) throws DALException {
-		System.out.println("-----------------------DAO-deleteUser------------------------");
+	public void deleteUser(String userName, String password) throws DALException {
+		System.out.println("-------------------DAO - deleteUser(" + userName + ")-------------------");
 		int userId = getUserId(userName);
-		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "'";
+		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "', password='" + password + "'";
 		String rolesusersQuery = "DELETE FROM roles_users WHERE users_id='" + userId + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(rolesusersQuery);
 			stmt.executeUpdate(usersQuery);
-		System.out.println("-------------------END--DAO-deleteUser-----------------------");
+			System.out.println("");
 
 		} catch (SQLException e) {
-			// Could not connect to the database
-			System.out.println(e.getMessage()); 
+			throw new DALException("SQLException in deleteUser(): " + e.getMessage());
 		}
 
 	}
