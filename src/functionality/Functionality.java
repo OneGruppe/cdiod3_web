@@ -41,7 +41,7 @@ public class Functionality //implements IFunctionality{
 			System.out.println("\n");
 			return isMatch;
 		} catch (DALException e) {
-			System.out.println("Der skete en fejl: " + e.getMessage());
+			System.out.println("An error occurred: " + e.getMessage());
 			System.out.println("\n");
 			return isMatch;
 		}
@@ -76,16 +76,16 @@ public class Functionality //implements IFunctionality{
 		for(String role : roleList) {
 			System.out.println(role);
 		}
-		if (!name.matches("[a-åA-Å0-9]{4,20}$")) {return "Username does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
-		if (name.equals("admin") || name.equals("Admin")) {return "ugyldigt brugernavn";}
-		if (!password.matches("[a-åA-Å0-9]{4,20}$")) {return "Password does not match a-å, A-Å or 0-9 while being between 4 and 20 characters";}
-		if (!ini.matches("[a-åA-Å]{1,3}$")) {return "Initials does not match a-å or A-Å while being bewteen 1 and 3 characters";}
+		if (!name.matches("[a-åA-Å\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
+		if (name.equals("admin") || name.equals("Admin")) {return "Invalid username";}
+		if (!password.matches("[a-åA-Å\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
+		if (!ini.matches("[a-åA-Å\\w]{1,3}$")) {return "Initials does not match a-å while being bewteen 1 and 3 characters";}
 		if (!cpr.matches("\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
 		if(roleList.isEmpty()) {
 			return "You have to choose at least one user role";
 		}
 
-		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[a-åA-Å0-9]{4,20}$") && password.matches("[a-åA-Å0-9]{4,20}$") && ini.matches("[a-åA-Å]{1,3}$")) {
+		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[\\w]{4,20}$") && password.matches("[a-åA-Å\\w]{4,20}$") && ini.matches("[\\w]{1,3}$")) {
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
 				dao.createUser(newUser);
@@ -101,16 +101,16 @@ public class Functionality //implements IFunctionality{
 		}
 
 	public void changeUser(int id, String newName, String newPassword, String newIni) {
-
+		
 	}
 
 	@POST
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
 		System.out.println("------------------FUNCTIONALITY--deleteUser()------------------");
-		String returnString = "'" + userName + "' findes ikke";
+		String returnString = "'" + userName + "' doesn't exist";
 		if(userName.equals("admin")) {
-			return "Ugyldigt input";
+			return "Invalid input";
 		}
 		try {
 			List<UserDTO> DTOList = dao.getUserList();
