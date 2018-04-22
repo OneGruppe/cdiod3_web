@@ -53,17 +53,16 @@ public class Functionality //implements IFunctionality{
 		System.out.println("------------------FUNCTIONALITY--createUser()------------------");
 		String returnValue = "Error in src/functionality/functionality/createUser";
 		List<String> roleList = new ArrayList<String>();
-		List<UserDTO> DTOList = null;
+		
+		List<UserDTO> existingUsers = null;
 		try {
-			DTOList = dao.getUserList();
-		} catch (DALException e1) {
-			e1.printStackTrace();
-		}
-
-		for (int j = 0; j < DTOList.size(); j++) {
-			if (DTOList.get(j).getUserName().equals(name) || DTOList.get(j).getIni().equals(ini) || DTOList.get(j).getCpr().equals(cpr)) {
-				return "Username, ini or CPR already exists";
+			existingUsers = dao.getUserList();
+			for(UserDTO usr : existingUsers) {
+			if(usr.getUserName().equals(name) ) {	return "Username already exist, try again";}
+			if(usr.getIni().equals(ini) ) {	return "Ini already exist, try again";}
+			if(usr.getCpr().equals(cpr) ) {	return "CPR-number already exist, try again";}
 			}
+		}catch (DALException e1) {
 			System.out.println(e1.getMessage());
 			System.out.println("\n");
 		}
