@@ -163,8 +163,8 @@ public class UserDAO implements IUserDAO {
 			stmt.executeUpdate(userQuery);
 			for (String role : roleList) {
 				Statement stmt2 = connection.createStatement();
-				stmt2.executeUpdate("INSERT INTO roles_users VALUES (" + role + ", " + getUserId(user.getUserName()) + ")");
-				System.out.println("INSERT INTO roles_users VALUES (" + role + ", " + getUserId(user.getUserName()) + ")");
+				stmt2.executeUpdate("INSERT INTO users_roles VALUES (" + getUserId(user.getUserName()) + ", " +  role + ")");
+				System.out.println("INSERT INTO users_roles VALUES (" + getUserId(user.getUserName()) + ", " +  role + ")");
 				System.out.println("");
 			}
 
@@ -195,7 +195,7 @@ public class UserDAO implements IUserDAO {
 		String rolesusersQuery = "DELETE FROM roles_users WHERE users_id='" + userId + "'";
 		try {
 			Statement stmt = connection.createStatement();
-			stmt.executeUpdate(rolesusersQuery);
+			//stmt.executeUpdate(rolesusersQuery);
 			stmt.executeUpdate(usersQuery);
 			System.out.println("");
 
