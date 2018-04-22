@@ -5,7 +5,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
-
 import data.*;
 import data.IUserDAO.*;
 
@@ -16,8 +15,12 @@ public class Functionality //implements IFunctionality{
 
 	public Functionality() {
 		UserDAO dao = new UserDAO();
-		this.dao = dao;		
-		dao.doConnection();
+		this.dao = dao;
+		try {
+			dao.doConnection();
+		} catch (DALException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@POST
