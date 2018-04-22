@@ -4,12 +4,34 @@ import java.util.List;
 
 public interface IUserDAO {
 
+	/**
+	 * Get user object from database
+	 * @param userName - string, which is searched for.
+	 * @return UserDTO object
+	 * @throws DALException
+	 */
 	UserDTO getUser(String userName) throws DALException;
 	
+	/**
+	 * Gets userID from database
+	 * @param username - string, which is searched for.
+	 * @return integer of the user-id.
+	 * @throws DALException
+	 */
 	int getUserId(String username) throws DALException;
 	
+	/**
+	 * Connects to database
+	 * @return true if connection was created
+	 * @throws DALException
+	 */
 	boolean doConnection() throws DALException;
 
+	/**
+	 * Closes the connection to database
+	 * @return true if connection was closed
+	 * @throws DALException
+	 */
 	boolean closeConnection() throws DALException;
 	
 	/**
