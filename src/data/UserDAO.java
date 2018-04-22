@@ -177,7 +177,7 @@ public class UserDAO implements IUserDAO {
 	public void updateUser(UserDTO user) throws DALException {
 		System.out.println("-------------------DAO - updateUser-------------------");
 		System.out.println("--- " + user.toString() + " ---");
-		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE id='" + user.getUserId() + "'";
+		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE user_id='" + user.getUserId() + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(query);
