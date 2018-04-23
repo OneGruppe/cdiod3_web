@@ -157,6 +157,7 @@ $(document).ready(function() {
 	    c.innerHTML = "Test";
 	    
 	    document.getElementById("showAllUsersContainer").appendChild(t);
+	    return false;
 	});
 	
 });

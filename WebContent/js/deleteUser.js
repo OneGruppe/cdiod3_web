@@ -15,7 +15,7 @@ $(document).ready(function() {
 				alert(data);
 			$(".loadToDiv").load("html/deleteUser.html");
 			}
-		})
+		});
 				return false;
 	});
 });
