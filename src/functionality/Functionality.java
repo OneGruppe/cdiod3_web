@@ -166,26 +166,25 @@ public class Functionality //implements IFunctionality{
 		return returnString;
 	}
 
-	@GET
+	@POST
 	@Path("showUser")
 	public JSONObject showUser(@FormParam("username") String name) {
 		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
-		List<String> userInfo = new ArrayList<String>();
 		JSONObject userJSON = new JSONObject();
 		
 		try {			
 			UserDTO user = dao.getUser(name);
 			
-			userInfo.add(Integer.toString(user.getUserId()));
-			userInfo.add(user.getUserName());
-			userInfo.add(user.getPassword());
-			userInfo.add(user.getIni());
-			userInfo.add(user.getCpr());
-			userInfo.add("Admin");
-			
-			userJSON.put("1", userInfo);
-			
+			userJSON.put("user_id",user.getUserId());
+			userJSON.put("name", user.getUserName());
+			userJSON.put("password", user.getPassword());
+			userJSON.put("ini", user.getIni());
+			userJSON.put("cpr", user.getCpr());
+			userJSON.put("roles", user.getRoles());
+						
 			System.out.println("Brugerens information er fundet");
+			
+			System.out.println(userJSON);
 
 			
 		} catch (DALException e) {

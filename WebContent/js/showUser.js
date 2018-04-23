@@ -5,19 +5,21 @@
 $(document).ready(function() {
 	$("#retrieveUserButton").click(function() {
 		
-		var fruits = ["Banana", "Orange", "Apple", "Mango", "Lemon", "Kiwi"];
-			$jQuery.ajax({
+		//var fruits = ["Banana", "Orange", "Apple", "Mango", "Lemon", "Kiwi"];
+			
+		$.ajax({
 			url:"rest/functionality/showUser",
 			data: $('#showUser_search').serialize(),
+			dataType: "json",
 			contenttype: "application/x-ww-form-urlencoded",
-			method: "GET",
+			method: "POST",
 			success:function(data) {
-				alert(data);
+				alert("DONE");
 			}
-		})
+		});
 		return false;
 		
-	    var c, r, t;
+	    /*var c, r, t;
 	    t = document.createElement('table');
 	    t.setAttribute('class',"showUser_table");
 	    r = t.insertRow(0);
@@ -50,7 +52,7 @@ $(document).ready(function() {
 	    c = r.insertCell(5);
 	    c.innerHTML = fruits[5];
 	    
-	    document.getElementById("showUserContainer").appendChild(t);
+	    document.getElementById("showUserContainer").appendChild(t);*/
 	    
 	//	}
 	//	})
