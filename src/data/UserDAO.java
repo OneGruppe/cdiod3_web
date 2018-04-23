@@ -54,9 +54,9 @@ public class UserDAO implements IUserDAO {
 	}
 
 	@Override
-	public int getUserId(String username) throws DALException {
+	public int getUser_id(String username) throws DALException {
 		System.out.println("-----------------------DAO-GET-USER-ID---------------------");
-		System.out.println("*** DAO: getUserId '" + username + "' ***");
+		System.out.println("*** DAO: getUser_id '" + username + "' ***");
 		String query = "SELECT * FROM users WHERE username='" + username + "'";
 		int userId = 0;
 		
@@ -71,7 +71,7 @@ public class UserDAO implements IUserDAO {
 			return userId;
 
 		} catch (SQLException e) {
-			throw new DALException("SQLException in getUserId(): " + e.getMessage());
+			throw new DALException("SQLException in getUser_id(): " + e.getMessage());
 		}
 	}
 	
@@ -125,14 +125,17 @@ public class UserDAO implements IUserDAO {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query); 
 			while (rs.next()) {
-				userId = rs.getInt("user_id");
-				userName = rs.getString("username");
-				password = rs.getString("password");
-				ini = rs.getString("ini");
-				cpr = rs.getString("cpr");
-				roleList.add(rs.getString("role_id"));
-
-				UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
+				if(user_id == rs.getInt("user_id") && user_id != 0) {
+					roleList.add(rs.getString("role_id"));
+				} else {
+					user_id = rs.getInt("user_id");
+					userName = rs.getString("username");
+					password = rs.getString("password");
+					ini = rs.getString("ini");
+					cpr = rs.getString("cpr");
+					roleList.add(rs.getString("role_id"));
+				}
+				UserDTO user = new UserDTO(user_id, userName, password, ini, cpr, roleList);
 				userList.add(user);
 			}
 			/*System.out.println("Users gotten from server:");
@@ -163,8 +166,8 @@ public class UserDAO implements IUserDAO {
 			stmt.executeUpdate(userQuery);
 			for (String role : roleList) {
 				Statement stmt2 = connection.createStatement();
-				stmt2.executeUpdate("INSERT INTO users_roles VALUES (" + getUserId(user.getUserName()) + ", " +  role + ")");
-				System.out.println("INSERT INTO users_roles VALUES (" + getUserId(user.getUserName()) + ", " +  role + ")");
+				stmt2.executeUpdate("INSERT INTO users_roles VALUES (" + getUser_id(user.getUserName()) + ", " +  role + ")");
+				System.out.println("INSERT INTO users_roles VALUES (" + getUser_id(user.getUserName()) + ", " +  role + ")");
 				System.out.println("");
 			}
 
@@ -177,7 +180,7 @@ public class UserDAO implements IUserDAO {
 	public void updateUser(UserDTO user) throws DALException {
 		System.out.println("-------------------DAO - updateUser-------------------");
 		System.out.println("--- " + user.toString() + " ---");
-		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE user_id='" + user.getUserId() + "'";
+		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE user_id='" + user.getUser_id() + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(query);
@@ -190,7 +193,7 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public void deleteUser(String userName) throws DALException {
 		System.out.println("-------------------DAO - deleteUser(" + userName + ")-------------------");
-		int userId = getUserId(userName);
+		int user_id = getUser_id(userName);
 		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "'";
 		try {
 			Statement stmt = connection.createStatement();
