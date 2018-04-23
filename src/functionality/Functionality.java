@@ -13,37 +13,51 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import data.IUserDAO.DALException;
-import data.UserDAO;
-import data.UserDTO;
+import data.*;
 
 
 @Path("functionality")
 public class Functionality //implements IFunctionality{
 {
-	UserDAO dao;
+	IUserDAO dao;
+	boolean isoffline = false;
 
 	public Functionality() {
-		UserDAO dao = new UserDAO();
-		this.dao = dao;
+		UserDAO dao;
+		OfflineUserDAO offdao = null;
 		try {
-			dao.doConnection();
+			dao = new UserDAO();
+			offdao = new OfflineUserDAO();
+			if(dao.doConnection()) {
+				this.dao = dao;
+				offdao.saveToFile(dao.getUserListBackup());
+				System.out.println("**- DATABASE-BACKUP SAVED -**");
+			}
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
+			try {
+				offdao = new OfflineUserDAO();
+				this.dao = offdao;
+				isoffline = true;
+				System.out.println("\n** Server is offline **\n");
+			} catch (DALException e1) {
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 
 	@POST
 	@Path("login")
-	public boolean login(@FormParam("username") String usr, @FormParam("password") String pass) {
+	public String login(@FormParam("username") String usr, @FormParam("password") String pass) {
 		System.out.println("------------------FUNCTIONALITY--login()-----------------");
-		boolean isMatch = false;
+		String isMatch = "false";
 		UserDTO user = null;
 		try {
 			user = dao.getUser(usr);
 			if (user.getUserName() == null) {return isMatch;}
 			else if (user.getPassword().equals(pass)) {
 				for (String role : user.getRoles()) {
-					if (role.equals("1")){isMatch = true;}
+					if (role.equals("1")){isMatch = "true";}
 				}
 			}
 			System.out.println("UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch);
@@ -60,6 +74,7 @@ public class Functionality //implements IFunctionality{
 	@Path("createUser")
 	public String createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr, @FormParam("admin") boolean admin, @FormParam("laborant") boolean laborant, @FormParam("farmaceut") boolean farmaceut, @FormParam("produktionsleder") boolean produktionsleder){
 		System.out.println("------------------FUNCTIONALITY--createUser()------------------");
+		if(this.isoffline) {return "External server is offline, you cannot create / edit users";}
 		String returnValue = "Error in src/functionality/functionality/createUser";
 		List<String> roleList = new ArrayList<String>();
 
@@ -93,7 +108,7 @@ public class Functionality //implements IFunctionality{
 		if(roleList.isEmpty()) {
 			return "You have to choose at least one user role";
 		}
- 
+
 		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[\\w]{4,20}$") && password.matches("[\\w]{4,20}$") && ini.matches("[\\w]{1,3}$")) {
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
@@ -113,135 +128,131 @@ public class Functionality //implements IFunctionality{
 	@Path("updateUser")
 	public String changeUser(@FormParam("username") String userName, @FormParam("newName") String newName, @FormParam("newPassword") String newPassword, @FormParam("newIni") String newIni) {
 		System.out.println("------------------FUNCTIONALITY--updateUser()------------------");
+		if(this.isoffline) {return "External server is offline, you cannot create / edit users";}
 		String returnString = "'" + userName + "' doesn't exist";
 		if(userName.equals("admin")) {
 			return "Invalid input";
 		}
-			List<UserDTO> existingUsers = null;
-			try {
-				existingUsers = dao.getUserList();
-			} catch (DALException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			for(UserDTO usr : existingUsers) {
-				if(usr.getUserName().equals(newName) ) {return "Username already exist, try again";}
-				if(usr.getIni().equals(newIni) ) {return "Ini already exist, try again";}
-				//Skal der være mulighed for at ændre CPR?
-				//if(usr.getCpr().equals(newCpr) ) {	return "CPR-number already exist, try again";}
-			}
-
-			if (!newName.matches("[\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
-			if (newName.equals("admin") || newName.equals("Admin")) {return "Invalid username";}
-			if (!newPassword.matches("[\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
-			if (!newIni.matches("[\\w]{1,3}$")) {return "Initials does not match a-å while being bewteen 1 and 3 characters";}
-			//if (!newCpr.matches("[\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
-
-			try {
-				UserDTO user = dao.getUser(userName);
-				System.out.println("Found user " +userName+ "\n");		
-
-				user.setUserName(newName);
-				user.setPassword(newPassword);
-				user.setIni(newIni);
-
-				dao.updateUser(user);
-
-				System.out.println("\nUser " +userName+ " was modified to " +user.getUserName());
-
-				returnString = "User " +userName+ " was succesfully modified";
-				System.out.println("\n");
-				return returnString;
-
-			} catch (DALException e) {
-				System.out.println(e.getMessage());
-				System.out.println("\n");
-				return "An error occurred";
-			}
+		List<UserDTO> existingUsers = null;
+		try {
+			existingUsers = dao.getUserList();
+		} catch (DALException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-	
-		@POST
-		@Path("deleteUser")
-		public String deleteUser(@FormParam("username") String userName) {
-			System.out.println("------------------FUNCTIONALITY--deleteUser()------------------");
-			String returnString = "'" + userName + "' doesn't exist";
-			if(userName.equals("admin")) {
-				return "Invalid input";
-			}
-			try {
-				List<UserDTO> DTOList = dao.getUserList();
-				for(int i = 0; i < DTOList.size(); i++) {
-					if(DTOList.get(i).getUserName().equals(userName)) {
-						dao.deleteUser(userName);
-						returnString = "User " + userName + " was deleted";
-						System.out.println("\n");
-						return returnString;
-					}
-				}
-			} catch (DALException e) {
-				System.out.println(e.getMessage());
-				System.out.println("\n");
-				return "An error occurred";
-			}
+		for(UserDTO usr : existingUsers) {
+			if(usr.getUserName().equals(newName) ) {return "Username already exist, try again";}
+			if(usr.getIni().equals(newIni) ) {return "Ini already exist, try again";}
+			//Skal der være mulighed for at ændre CPR?
+			//if(usr.getCpr().equals(newCpr) ) {	return "CPR-number already exist, try again";}
+		}
+
+		if (!newName.matches("[\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
+		if (newName.equals("admin") || newName.equals("Admin")) {return "Invalid username";}
+		if (!newPassword.matches("[\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
+		if (!newIni.matches("[\\w]{1,3}$")) {return "Initials does not match a-å while being bewteen 1 and 3 characters";}
+		//if (!newCpr.matches("[\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
+
+		try {
+			UserDTO user = dao.getUser(userName);
+			System.out.println("Found user " +userName+ "\n");		
+
+			user.setUserName(newName);
+			user.setPassword(newPassword);
+			user.setIni(newIni);
+
+			dao.updateUser(user);
+
+			System.out.println("\nUser " +userName+ " was modified to " +user.getUserName());
+
+			returnString = "User " +userName+ " was succesfully modified";
 			System.out.println("\n");
 			return returnString;
-		}
 
-		@POST
-		@Produces(MediaType.APPLICATION_JSON)
-		@Path("showUser")
-		public String showUser(@FormParam("username") String name) {
-			System.out.println("------------------FUNCTIONALITY--showUser()------------------");
-			JSONObject userJSON = new JSONObject();
-
-			try {			
-				UserDTO user = dao.getUser(name);
-
-				userJSON.put("user_id",user.getUser_id());
-				userJSON.put("name", user.getUserName());
-				userJSON.put("password", user.getPassword());
-				userJSON.put("ini", user.getIni());
-				userJSON.put("cpr", user.getCpr());
-				userJSON.put("roles", user.getRoles());
-
-				System.out.println("Brugerens information er fundet:");
-				System.out.println(userJSON);
-
-
-			} catch (DALException e) {
-				System.out.println(e.getMessage());
-			}
+		} catch (DALException e) {
+			System.out.println(e.getMessage());
 			System.out.println("\n");
-			return userJSON.toString();
+			return "An error occurred";
 		}
-
-		public String showUserAdmin(int id) {
-
-			return null;
-		}
-
-		@POST
-		@Produces(MediaType.APPLICATION_JSON)
-		@Path("showAllUsers")
-		public String showUserList() {
-			System.out.println("------------------FUNCTIONALITY--showAllUser()------------------");
-			JSONArray userArray = new JSONArray();
-
-			try {
-				//List<UserDTO> allUsers = dao.getUserList();
-				userArray.put(dao.getUserList());
-			}
-			catch (DALException e) {
-				System.out.println(e.getMessage());
-			}
-			System.out.println(userArray);
-			return userArray.toString();
-		}
-
-
-		public String showUserListAdmin() {
-
-			return null;
-		}
-
 	}
+
+	@POST
+	@Path("deleteUser")
+	public String deleteUser(@FormParam("username") String userName) {
+		if(this.isoffline) {return "External server is offline, you cannot create / edit users";}
+		System.out.println("------------------FUNCTIONALITY--deleteUser()------------------");
+		String returnString = "'" + userName + "' doesn't exist";
+		if(userName.equals("admin")) {
+			return "Invalid input";
+		}
+		try {
+			List<UserDTO> DTOList = dao.getUserList();
+			for(int i = 0; i < DTOList.size(); i++) {
+				if(DTOList.get(i).getUserName().equals(userName)) {
+					dao.deleteUser(userName);
+					returnString = "User " + userName + " was deleted";
+					System.out.println("\n");
+					return returnString;
+				}
+			}
+		} catch (DALException e) {
+			System.out.println(e.getMessage());
+			System.out.println("\n");
+			return "An error occurred";
+		}
+		System.out.println("\n");
+		return returnString;
+	}
+
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("showUser")
+	public String showUser(@FormParam("username") String name) {
+		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
+		JSONObject userJSON = new JSONObject();
+
+		try {			
+			UserDTO user = dao.getUser(name);
+
+			userJSON.put("user_id",user.getUser_id());
+			userJSON.put("name", user.getUserName());
+			userJSON.put("password", user.getPassword());
+			userJSON.put("ini", user.getIni());
+			userJSON.put("cpr", user.getCpr());
+			userJSON.put("roles", user.getRoles());
+
+			System.out.println("Brugerens information er fundet:");
+			System.out.println(userJSON);
+
+
+		} catch (DALException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println("\n");
+		return userJSON.toString();
+	}
+
+	public String showUserAdmin(int id) {
+
+		return null;
+	}
+
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("showAllUsers")
+	public String showUserList() {
+		System.out.println("------------------FUNCTIONALITY--showAllUser()------------------");
+		JSONArray userArray = new JSONArray();
+
+		try {
+			//List<UserDTO> allUsers = dao.getUserList();
+			userArray.put(dao.getUserList());
+		}
+		catch (DALException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println(userArray);
+		return userArray.toString();
+	}
+
+}
