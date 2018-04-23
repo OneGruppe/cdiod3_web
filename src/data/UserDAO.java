@@ -22,7 +22,7 @@ public class UserDAO implements IUserDAO {
 	String userName = "Eclipse-bruger"; 
 	String password = "ySmTL37uDjYZmzyn";
 
-	@Override
+	
 	public boolean doConnection() throws DALException{ 
 		try {
 			// Load the JDBC driver
@@ -39,7 +39,6 @@ public class UserDAO implements IUserDAO {
 		return true; 
 	}
 
-	@Override
 	public int getUser_id(String username) throws DALException {
 		String query = "SELECT * FROM users WHERE username='" + username + "'";
 		int userId = 0;

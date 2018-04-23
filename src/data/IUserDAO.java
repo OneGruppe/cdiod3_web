@@ -13,21 +13,6 @@ public interface IUserDAO {
 	UserDTO getUser(String userName) throws DALException;
 	
 	/**
-	 * Gets userID from database
-	 * @param username - string, which is searched for.
-	 * @return integer of the user-id.
-	 * @throws DALException
-	 */
-	int getUser_id(String username) throws DALException;
-	
-	/**
-	 * Connects to database
-	 * @return true if connection was created
-	 * @throws DALException
-	 */
-	boolean doConnection() throws DALException;
-	
-	/**
 	 * Gets list of users from disk
 	 * @return list of user objects
 	 * @throws DALException
