@@ -36,7 +36,7 @@ $(document).ready(function() {
 					r = t.insertRow(1);
 					r.setAttribute('class',"table_content")
 					c = r.insertCell(0);
-					c.innerHTML = data.user_id[i];
+					c.innerHTML = data.userId[i];
 					c = r.insertCell(1);
 					c.innerHTML = data.name[i];
 					c = r.insertCell(2);
