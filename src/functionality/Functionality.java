@@ -30,8 +30,9 @@ public class Functionality //implements IFunctionality{
 			offdao = new OfflineUserDAO();
 			if(dao.doConnection()) {
 				this.dao = dao;
+				System.out.println("\n** Server is online **\n");
 				offdao.saveToFile(dao.getUserListBackup());
-				System.out.println("**- DATABASE-BACKUP SAVED -**");
+				System.out.println("\n**- DATABASE-BACKUP SAVED -**\n");
 			}
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
@@ -49,7 +50,6 @@ public class Functionality //implements IFunctionality{
 	@POST
 	@Path("login")
 	public String login(@FormParam("username") String usr, @FormParam("password") String pass) {
-		System.out.println("------------------FUNCTIONALITY--login()-----------------");
 		String isMatch = "false";
 		UserDTO user = null;
 		try {
@@ -60,12 +60,10 @@ public class Functionality //implements IFunctionality{
 					if (role.equals("1")){isMatch = "true";}
 				}
 			}
-			System.out.println("UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch);
+			System.out.println("\nLOGIN: UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch);
 			System.out.println("\n");
 			return isMatch;
 		} catch (DALException e) {
-			System.out.println("An error occurred: " + e.getMessage());
-			System.out.println("\n");
 			return isMatch;
 		}
 	}
@@ -89,7 +87,6 @@ public class Functionality //implements IFunctionality{
 	@POST
 	@Path("createUser")
 	public String createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr, @FormParam("admin") boolean admin, @FormParam("laborant") boolean laborant, @FormParam("farmaceut") boolean farmaceut, @FormParam("produktionsleder") boolean produktionsleder){
-		System.out.println("------------------FUNCTIONALITY--createUser()------------------");
 		if(this.isoffline) {return "External server is offline, you cannot create / edit users";}
 		String returnValue = "Error in src/functionality/functionality/createUser";
 		List<String> roleList = new ArrayList<String>();
@@ -112,10 +109,6 @@ public class Functionality //implements IFunctionality{
 		if(farmaceut) {roleList.add("3");}
 		if(produktionsleder) {roleList.add("4");}
 
-		System.out.println("RoleList:");
-		for(String role : roleList) {
-			System.out.println(role);
-		}
 		if (!name.matches("[\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
 		if (name.equals("admin") || name.equals("Admin")) {return "Invalid username";}
 		if (!password.matches("[\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
@@ -132,18 +125,14 @@ public class Functionality //implements IFunctionality{
 				returnValue = "User successfully created";
 			} catch (DALException e) {
 				System.out.println(e.getMessage());
-				System.out.println("\n");
 			}
 		}
-
-		System.out.println("\n");
 		return returnValue;
 	}
 
 	@POST
 	@Path("updateUser")
 	public String changeUser(@FormParam("username") String userName, @FormParam("newName") String newName, @FormParam("newPassword") String newPassword, @FormParam("newIni") String newIni) {
-		System.out.println("------------------FUNCTIONALITY--updateUser()------------------");
 		if(this.isoffline) {return "External server is offline, you cannot create / edit users";}
 		String returnString = "'" + userName + "' doesn't exist";
 		if(userName.equals("admin")) {
@@ -171,7 +160,6 @@ public class Functionality //implements IFunctionality{
 
 		try {
 			UserDTO user = dao.getUser(userName);
-			System.out.println("Found user " +userName+ "\n");		
 
 			user.setUserName(newName);
 			user.setPassword(newPassword);
@@ -179,15 +167,11 @@ public class Functionality //implements IFunctionality{
 
 			dao.updateUser(user);
 
-			System.out.println("\nUser " +userName+ " was modified to " +user.getUserName());
-
 			returnString = "User " +userName+ " was succesfully modified";
-			System.out.println("\n");
 			return returnString;
 
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
-			System.out.println("\n");
 			return "An error occurred";
 		}
 	}
@@ -196,7 +180,6 @@ public class Functionality //implements IFunctionality{
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
 		if(this.isoffline) {return "External server is offline, you cannot create / edit users";}
-		System.out.println("------------------FUNCTIONALITY--deleteUser()------------------");
 		String returnString = "'" + userName + "' doesn't exist";
 		if(userName.equals("admin")) {
 			return "Invalid input";
@@ -207,7 +190,6 @@ public class Functionality //implements IFunctionality{
 				if(DTOList.get(i).getUserName().equals(userName)) {
 					dao.deleteUser(userName);
 					returnString = "User " + userName + " was deleted";
-					System.out.println("\n");
 					return returnString;
 				}
 			}
@@ -216,7 +198,6 @@ public class Functionality //implements IFunctionality{
 			System.out.println("\n");
 			return "An error occurred";
 		}
-		System.out.println("\n");
 		return returnString;
 	}
 
@@ -224,9 +205,7 @@ public class Functionality //implements IFunctionality{
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("showUser")
 	public String showUser(@FormParam("username") String name) {
-		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
 		JSONObject userJSON = new JSONObject();
-
 		try {			
 			UserDTO user = dao.getUser(name);
 
@@ -248,20 +227,12 @@ public class Functionality //implements IFunctionality{
 		return userJSON.toString();
 	}
 
-	public String showUserAdmin(int id) {
-
-		return null;
-	}
-
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("showAllUsers")
 	public String showUserList() {
-		System.out.println("------------------FUNCTIONALITY--showAllUser()------------------");
 		JSONArray userArray = new JSONArray();
-
 		try {
-			//List<UserDTO> allUsers = dao.getUserList();
 			userArray.put(dao.getUserList());
 		}
 		catch (DALException e) {
