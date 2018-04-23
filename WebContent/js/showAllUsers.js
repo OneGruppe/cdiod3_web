@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
 
-	$("#retrieveAllUsersButton").click(function() {
+	//$("#retrieveAllUsersButton").click(function() {
 		$.ajax({
 			url:"rest/functionality/showAllUsers",
 			data: $('#showUser_search').serialize(),
@@ -93,6 +93,6 @@ $(document).ready(function() {
 				}
 			})
 			return false;
-		});
+	//	});
 
 	});
