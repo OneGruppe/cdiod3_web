@@ -32,20 +32,23 @@ $(document).ready(function() {
 				    c = r.insertCell(5);
 				    c.innerHTML = "Role";
 				    
-				    r = t.insertRow(1);
-				    r.setAttribute('class',"table_content")
-				    c = r.insertCell(0);
-				    c.innerHTML = data.user_id;
-				    c = r.insertCell(1);
-				    c.innerHTML = data.name;
-				    c = r.insertCell(2);
-				    c.innerHTML = data.password;
-				    c = r.insertCell(3);
-				    c.innerHTML = data.ini;
-				    c = r.insertCell(4);
-				    c.innerHTML = data.cpr;
-				    c = r.insertCell(5);
-				    c.innerHTML = data.roles;
+				    for (var i = 0; i < data.length; i++) {
+				    	r = t.insertRow(1);
+				    	r.setAttribute('class',"table_content")
+				    	c = r.insertCell(0);
+				    	c.innerHTML = data.userId[i];
+				    	c = r.insertCell(1);
+				    	c.innerHTML = data.name[i]
+				    	c = r.insertCell(2);
+				    	c.innerHTML = data.password[i];
+				    	c = r.insertCell(3);
+				    	c.innerHTML = data.ini[i];
+				    	c = r.insertCell(4);
+				    	c.innerHTML = data.cpr[i];
+				    	c = r.insertCell(5);
+				    	c.innerHTML = data.roles[i];
+					}
+				    
 				    
 				    document.getElementById("showUserContainer").appendChild(t);
 				

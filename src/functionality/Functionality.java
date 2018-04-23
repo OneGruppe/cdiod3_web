@@ -9,6 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import data.IUserDAO.DALException;
@@ -61,14 +62,14 @@ public class Functionality //implements IFunctionality{
 		System.out.println("------------------FUNCTIONALITY--createUser()------------------");
 		String returnValue = "Error in src/functionality/functionality/createUser";
 		List<String> roleList = new ArrayList<String>();
-		
+
 		List<UserDTO> existingUsers = null;
 		try {
 			existingUsers = dao.getUserList();
 			for(UserDTO usr : existingUsers) {
-			if(usr.getUserName().equals(name) ) {	return "Username already exist, try again";}
-			if(usr.getIni().equals(ini) ) {	return "Ini already exist, try again";}
-			if(usr.getCpr().equals(cpr) ) {	return "CPR-number already exist, try again";}
+				if(usr.getUserName().equals(name) ) {	return "Username already exist, try again";}
+				if(usr.getIni().equals(ini) ) {	return "Ini already exist, try again";}
+				if(usr.getCpr().equals(cpr) ) {	return "CPR-number already exist, try again";}
 			}
 		}catch (DALException e1) {
 			System.out.println(e1.getMessage());
@@ -105,9 +106,9 @@ public class Functionality //implements IFunctionality{
 		}
 
 		System.out.println("\n");
-			return returnValue;
-		}
-	
+		return returnValue;
+	}
+
 	@POST
 	@Path("updateUser")
 	public String changeUser(@FormParam("username") String userName, @FormParam("newName") String newName, @FormParam("newPassword") String newPassword, @FormParam("newIni") String newIni) {
@@ -119,19 +120,19 @@ public class Functionality //implements IFunctionality{
 		try {
 			UserDTO user = dao.getUser(userName);
 			System.out.println("Found user " +userName+ "\n");		
-			
+
 			user.setUserName(newName);
 			user.setPassword(newPassword);
 			user.setIni(newIni);
-			
+
 			dao.updateUser(user);
-			
+
 			System.out.println("\nUser " +userName+ " was modified to " +user.getUserName());
-			
+
 			returnString = "User " +userName+ " was succesfully modified";
 			System.out.println("\n");
 			return returnString;
-			
+
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
 			System.out.println("\n");
@@ -172,21 +173,21 @@ public class Functionality //implements IFunctionality{
 	public String showUser(@FormParam("username") String name) {
 		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
 		JSONObject userJSON = new JSONObject();
-		
+
 		try {			
 			UserDTO user = dao.getUser(name);
-			
+
 			userJSON.put("user_id",user.getUserId());
 			userJSON.put("name", user.getUserName());
 			userJSON.put("password", user.getPassword());
 			userJSON.put("ini", user.getIni());
 			userJSON.put("cpr", user.getCpr());
 			userJSON.put("roles", user.getRoles());
-						
+
 			System.out.println("Brugerens information er fundet:");
 			System.out.println(userJSON);
 
-			
+
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
 		}
@@ -199,9 +200,22 @@ public class Functionality //implements IFunctionality{
 		return null;
 	}
 
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("showAllUsers")
 	public String showUserList() {
+		System.out.println("------------------FUNCTIONALITY--showAllUser()------------------");
+		JSONArray userArray = new JSONArray();
 
-		return null;
+		try {
+			//List<UserDTO> allUsers = dao.getUserList();
+			userArray.put(dao.getUserList());
+		}
+		catch (DALException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println(userArray);
+		return userArray.toString();
 	}
 
 
