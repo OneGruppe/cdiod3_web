@@ -6,18 +6,16 @@ $(document).ready(function() {
 	$("#retrieveUserButton").click(function() {
 		
 		var fruits = ["Banana", "Orange", "Apple", "Mango", "Lemon", "Kiwi"];
-		
-	/*	$jQuery.ajax({
+			$jQuery.ajax({
 			url:"rest/functionality/showUser",
 			data: $('#showUser_search').serialize(),
 			contenttype: "application/x-ww-form-urlencoded",
-			method: "POST",
+			method: "GET",
 			success:function(data) {
-				x = data;
+				alert(data);
 			}
 		})
-	*/
-//		return false;
+		return false;
 		
 	    var c, r, t;
 	    t = document.createElement('table');

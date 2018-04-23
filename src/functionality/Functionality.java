@@ -1,15 +1,20 @@
 package functionality;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+
+import org.json.JSONObject;
 
 import data.IUserDAO.DALException;
 import data.UserDAO;
 import data.UserDTO;
+
 
 @Path("functionality")
 public class Functionality //implements IFunctionality{
@@ -161,17 +166,33 @@ public class Functionality //implements IFunctionality{
 		return returnString;
 	}
 
-	@POST
+	@GET
 	@Path("showUser")
-	public String[] showUser(@FormParam("username") String name) {
+	public JSONObject showUser(@FormParam("username") String name) {
 		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
-		String retur[] = new String[2]; 
-		retur[0]= "'" + name + "' har været igennem Java, og vises nu her.";
-		retur[1] = "hej";
-		System.out.println(retur[0]);
-		System.out.println(retur[1]);
+		List<String> userInfo = new ArrayList<String>();
+		JSONObject userJSON = new JSONObject();
+		
+		try {			
+			UserDTO user = dao.getUser(name);
+			
+			userInfo.add(Integer.toString(user.getUserId()));
+			userInfo.add(user.getUserName());
+			userInfo.add(user.getPassword());
+			userInfo.add(user.getIni());
+			userInfo.add(user.getCpr());
+			userInfo.add("Admin");
+			
+			userJSON.put("1", userInfo);
+			
+			System.out.println("Brugerens information er fundet");
+
+			
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 		System.out.println("\n");
-		return retur;
+		return userJSON;
 	}
 
 	public String showUserAdmin(int id) {
