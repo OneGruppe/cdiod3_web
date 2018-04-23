@@ -38,20 +38,6 @@ public class UserDAO implements IUserDAO {
 		}
 		return true; 
 	}
-	
-	@Override
-	public boolean closeConnection() throws DALException { 
-		try {
-			connection.close();
-			Class.forName(driverName);
-
-		} catch (ClassNotFoundException e) {
-			throw new DALException("ClassNotFoundException in closeConnection(): " + e.getMessage());
-		} catch (SQLException e) {
-			throw new DALException("SQLException in closeConnection(): " + e.getMessage());
-		}
-		return true; 
-	}
 
 	@Override
 	public int getUser_id(String username) throws DALException {

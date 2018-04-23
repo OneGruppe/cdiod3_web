@@ -26,13 +26,6 @@ public interface IUserDAO {
 	 * @throws DALException
 	 */
 	boolean doConnection() throws DALException;
-
-	/**
-	 * Closes the connection to database
-	 * @return true if connection was closed
-	 * @throws DALException
-	 */
-	boolean closeConnection() throws DALException;
 	
 	/**
 	 * Gets list of users from disk
