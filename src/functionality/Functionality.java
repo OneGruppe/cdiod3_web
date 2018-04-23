@@ -30,7 +30,7 @@ public class Functionality //implements IFunctionality{
 			offdao = new OfflineUserDAO();
 			if(dao.doConnection()) {
 				this.dao = dao;
-				System.out.println("\n** Server is online **\n");
+				System.out.println("\n** Connected to server **\n");
 				offdao.saveToFile(dao.getUserListBackup());
 				System.out.println("\n**- DATABASE-BACKUP SAVED -**\n");
 			}
@@ -60,8 +60,7 @@ public class Functionality //implements IFunctionality{
 					if (role.equals("1")){isMatch = "true";}
 				}
 			}
-			System.out.println("\nLOGIN: UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch);
-			System.out.println("\n");
+			System.out.println("\nLOGIN: UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch + "\n");
 			return isMatch;
 		} catch (DALException e) {
 			return isMatch;
@@ -101,7 +100,6 @@ public class Functionality //implements IFunctionality{
 			}
 		}catch (DALException e1) {
 			System.out.println(e1.getMessage());
-			System.out.println("\n");
 		}
 
 		if(admin) {roleList.add("1");}
@@ -195,7 +193,6 @@ public class Functionality //implements IFunctionality{
 			}
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
-			System.out.println("\n");
 			return "An error occurred";
 		}
 		return returnString;
@@ -215,10 +212,6 @@ public class Functionality //implements IFunctionality{
 			userJSON.put("ini", user.getIni());
 			userJSON.put("cpr", user.getCpr());
 			userJSON.put("roles", user.getRoles());
-
-			System.out.println("Brugerens information er fundet:");
-			System.out.println(userJSON);
-
 
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
