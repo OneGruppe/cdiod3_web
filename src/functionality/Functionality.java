@@ -6,6 +6,8 @@ import java.util.List;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.json.JSONObject;
 
@@ -165,6 +167,7 @@ public class Functionality //implements IFunctionality{
 	}
 
 	@POST
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("showUser")
 	public JSONObject showUser(@FormParam("username") String name) {
 		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
@@ -185,7 +188,7 @@ public class Functionality //implements IFunctionality{
 
 			
 		} catch (DALException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		System.out.println("\n");
 		return userJSON;
