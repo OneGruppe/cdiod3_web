@@ -169,7 +169,7 @@ public class Functionality //implements IFunctionality{
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("showUser")
-	public JSONObject showUser(@FormParam("username") String name) {
+	public String showUser(@FormParam("username") String name) {
 		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
 		JSONObject userJSON = new JSONObject();
 		
@@ -191,7 +191,7 @@ public class Functionality //implements IFunctionality{
 			System.out.println(e.getMessage());
 		}
 		System.out.println("\n");
-		return userJSON;
+		return userJSON.toString();
 	}
 
 	public String showUserAdmin(int id) {

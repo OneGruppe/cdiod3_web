@@ -14,7 +14,7 @@ $(document).ready(function() {
 			contenttype: "application/x-ww-form-urlencoded",
 			method: "POST",
 			success:function(data) {
-				alert("DONE");
+				alert(data);
 			}
 		});
 		return false;
