@@ -36,14 +36,10 @@ public class Functionality //implements IFunctionality{
 			}
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
-			try {
 				offdao = new OfflineUserDAO();
 				this.dao = offdao;
 				isoffline = true;
 				System.out.println("\n** Server is offline **\n");
-			} catch (DALException e1) {
-				System.out.println(e.getMessage());
-			}
 		}
 	}
 

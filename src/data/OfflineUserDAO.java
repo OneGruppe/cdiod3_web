@@ -15,11 +15,11 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 
 	private List<UserDTO> users;
 
-	public OfflineUserDAO() throws DALException{
+	public OfflineUserDAO(){
 		try {
 			users = getUserList();
 		} catch (DALException e) {
-			throw new DALException("There was an error trying to create array in OfflineUserDAO constructor");
+			System.out.println(e.getMessage());
 		}
 	}
 
