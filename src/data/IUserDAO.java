@@ -18,7 +18,7 @@ public interface IUserDAO {
 	 * @return integer of the user-id.
 	 * @throws DALException
 	 */
-	int getUserId(String username) throws DALException;
+	int getUser_id(String username) throws DALException;
 	
 	/**
 	 * Connects to database

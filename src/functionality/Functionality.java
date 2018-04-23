@@ -177,7 +177,7 @@ public class Functionality //implements IFunctionality{
 		try {			
 			UserDTO user = dao.getUser(name);
 
-			userJSON.put("user_id",user.getUserId());
+			userJSON.put("user_id",user.getUser_id());
 			userJSON.put("name", user.getUserName());
 			userJSON.put("password", user.getPassword());
 			userJSON.put("ini", user.getIni());

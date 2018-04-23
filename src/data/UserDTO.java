@@ -5,7 +5,7 @@ import java.util.List;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 3860480211274703570L;
-	private int userId;                     
+	private int user_id;                     
 	private String userName;                
 	private String password;
 	private String ini;                 
@@ -14,7 +14,7 @@ public class UserDTO implements Serializable {
 
 
 	public UserDTO(int userId, String userName, String password, String ini, String cpr, List<String> roles) {
-		this.userId = userId;
+		this.user_id = userId;
 		this.userName = userName;
 		this.password = password;
 		this.ini = ini;
@@ -25,8 +25,8 @@ public class UserDTO implements Serializable {
 	/**
 	 * @return id of the user
 	 */
-	public int getUserId() {
-		return userId;
+	public int getUser_id() {
+		return user_id;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class UserDTO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		String returnString = "Id: " + userId + ", Username: " + userName + ", Initials: " + ini + ", Roles:";
+		String returnString = "Id: " + user_id + ", Username: " + userName + ", Initials: " + ini + ", Roles:";
 		for (String role : roles) {returnString += role + "-";}
 		return returnString;
 	}

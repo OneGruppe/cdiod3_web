@@ -116,7 +116,7 @@ public class UserDAO implements IUserDAO {
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		List<String> roleList= new ArrayList<>();
 		String query = "SELECT * FROM totalView WHERE NOT username='admin'";
-		int userId = 0;
+		int user_id = 0;
 		String userName = null;
 		String password = null;
 		String ini = null;
