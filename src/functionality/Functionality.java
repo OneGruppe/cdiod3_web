@@ -71,6 +71,22 @@ public class Functionality //implements IFunctionality{
 	}
 
 	@POST
+	@Path("logout")
+	public boolean logout() {
+		if(isoffline== false){
+			try {
+				dao.getUser("admin");
+				return true;
+			} catch (DALException e) {
+				System.out.println("Logout error: " + e.getMessage());
+				return false;
+			}
+		} else{
+			return true;
+		}
+	}
+
+	@POST
 	@Path("createUser")
 	public String createUser(@FormParam("username") String name, @FormParam("password") String password, @FormParam("ini") String ini, @FormParam("CPR") String cpr, @FormParam("admin") boolean admin, @FormParam("laborant") boolean laborant, @FormParam("farmaceut") boolean farmaceut, @FormParam("produktionsleder") boolean produktionsleder){
 		System.out.println("------------------FUNCTIONALITY--createUser()------------------");
