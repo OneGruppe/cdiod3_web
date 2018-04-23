@@ -41,8 +41,6 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public int getUser_id(String username) throws DALException {
-		System.out.println("-----------------------DAO-GET-USER-ID---------------------");
-		System.out.println("*** DAO: getUser_id '" + username + "' ***");
 		String query = "SELECT * FROM users WHERE username='" + username + "'";
 		int userId = 0;
 
@@ -52,8 +50,6 @@ public class UserDAO implements IUserDAO {
 			while(rs.next()) {
 				userId = rs.getInt("user_id");
 			}
-			System.out.println("Id: " + userId);
-			System.out.println("");
 			return userId;
 
 		} catch (SQLException e) {
@@ -63,7 +59,6 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public UserDTO getUser(String username) throws DALException {
-		System.out.println("-------------------DAO - getUser(" + username + ")-------------------");
 		String query = "SELECT * FROM totalView WHERE username='" + username + "'";
 		int userId = 0;
 		String userName = null;
@@ -87,8 +82,6 @@ public class UserDAO implements IUserDAO {
 				roleList.add(rs.getString("role_id"));
 			}
 			UserDTO user = new UserDTO(userId, userName, password, ini, cpr, roleList);
-			System.out.println(user.toString());
-			System.out.println("");
 			return user;
 
 		} catch (SQLException e) {
@@ -98,7 +91,6 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
-		System.out.println("-------------------DAO - getUserList-------------------");
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		String userQuery = "SELECT * FROM users WHERE NOT username='admin'";
 		String roleQuery  = "SELECT * from users_roles WHERE NOT users_id='1'";
@@ -155,9 +147,6 @@ public class UserDAO implements IUserDAO {
 			 */
 
 
-			/*System.out.println("Users gotten from server:");
-			for(UserDTO user : userList) {System.out.println(user.toString());}
-			System.out.println("");*/
 			return userList;
 
 		} catch (SQLException e) {
@@ -167,8 +156,6 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void createUser(UserDTO user) throws DALException {
-		System.out.println("-------------------DAO - createUser-------------------");
-		System.out.println("--- " + user.toString() + " ---");
 		List<String> roleList = user.getRoles();
 
 		String userQuery = "INSERT INTO users (username, password, ini, cpr) "
@@ -176,7 +163,6 @@ public class UserDAO implements IUserDAO {
 				+ "'" + user.getPassword() + "'," 
 				+ "'" + user.getIni() + "'," 
 				+ "'" + user.getCpr() + "')";
-		System.out.println("SQL query: " + userQuery);
 
 		try {
 			Statement stmt = connection.createStatement();
@@ -184,8 +170,6 @@ public class UserDAO implements IUserDAO {
 			for (String role : roleList) {
 				Statement stmt2 = connection.createStatement();
 				stmt2.executeUpdate("INSERT INTO users_roles VALUES (" + getUser_id(user.getUserName()) + ", " +  role + ")");
-				System.out.println("INSERT INTO users_roles VALUES (" + getUser_id(user.getUserName()) + ", " +  role + ")");
-				System.out.println("");
 			}
 
 		} catch (SQLException e) {
@@ -195,13 +179,10 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
-		System.out.println("-------------------DAO - updateUser-------------------");
-		System.out.println("--- " + user.toString() + " ---");
 		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE user_id='" + user.getUser_id() + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(query);
-			System.out.println("");
 		} catch (SQLException e) {
 			throw new DALException("SQLException in updateUser(): " + e.getMessage());
 		}
@@ -209,13 +190,11 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void deleteUser(String userName) throws DALException {
-		System.out.println("-------------------DAO - deleteUser(" + userName + ")-------------------");
 		int user_id = getUser_id(userName);
 		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "'";
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(usersQuery);
-			System.out.println("");
 		} catch (SQLException e) {
 			throw new DALException("SQLException in deleteUser(): " + e.getMessage());
 
