@@ -85,16 +85,16 @@ public class Functionality //implements IFunctionality{
 		for(String role : roleList) {
 			System.out.println(role);
 		}
-		if (!name.matches("[a-åA-Å\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
+		if (!name.matches("[\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
 		if (name.equals("admin") || name.equals("Admin")) {return "Invalid username";}
-		if (!password.matches("[a-åA-Å\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
-		if (!ini.matches("[a-åA-Å\\w]{1,3}$")) {return "Initials does not match a-å while being bewteen 1 and 3 characters";}
+		if (!password.matches("[\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
+		if (!ini.matches("[\\w]{1,3}$")) {return "Initials does not match a-å while being bewteen 1 and 3 characters";}
 		if (!cpr.matches("\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
 		if(roleList.isEmpty()) {
 			return "You have to choose at least one user role";
 		}
-
-		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[\\w]{4,20}$") && password.matches("[a-åA-Å\\w]{4,20}$") && ini.matches("[\\w]{1,3}$")) {
+ 
+		if (cpr.matches("\\d{6}\\-\\d{4}") && name.matches("[\\w]{4,20}$") && password.matches("[\\w]{4,20}$") && ini.matches("[\\w]{1,3}$")) {
 			UserDTO newUser = new UserDTO(0, name, password, ini, cpr, roleList);
 			try {
 				dao.createUser(newUser);
@@ -125,17 +125,17 @@ public class Functionality //implements IFunctionality{
 				e1.printStackTrace();
 			}
 			for(UserDTO usr : existingUsers) {
-				if(usr.getUserName().equals(newName) ) {	return "Username already exist, try again";}
-				if(usr.getIni().equals(newIni) ) {	return "Ini already exist, try again";}
+				if(usr.getUserName().equals(newName) ) {return "Username already exist, try again";}
+				if(usr.getIni().equals(newIni) ) {return "Ini already exist, try again";}
 				//Skal der være mulighed for at ændre CPR?
 				//if(usr.getCpr().equals(newCpr) ) {	return "CPR-number already exist, try again";}
 			}
 
-			if (!newName.matches("[a-åA-Å\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
+			if (!newName.matches("[\\w]{4,20}$")) {return "Username does not match a-å or 0-9 while being between 4 and 20 characters";}
 			if (newName.equals("admin") || newName.equals("Admin")) {return "Invalid username";}
-			if (!newPassword.matches("[a-åA-Å\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
-			if (!newIni.matches("[a-åA-Å\\w]{1,3}$")) {return "Initials does not match a-å while being bewteen 1 and 3 characters";}
-			//if (!newCpr.matches("\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
+			if (!newPassword.matches("[\\w]{4,20}$")) {return "Password does not match a-å or 0-9 while being between 4 and 20 characters";}
+			if (!newIni.matches("[\\w]{1,3}$")) {return "Initials does not match a-å while being bewteen 1 and 3 characters";}
+			//if (!newCpr.matches("[\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits dash 4 digits";}
 
 			try {
 				UserDTO user = dao.getUser(userName);
