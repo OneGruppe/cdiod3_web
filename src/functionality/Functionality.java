@@ -1,11 +1,9 @@
 package functionality;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -182,8 +180,7 @@ public class Functionality //implements IFunctionality{
 			userJSON.put("cpr", user.getCpr());
 			userJSON.put("roles", user.getRoles());
 						
-			System.out.println("Brugerens information er fundet");
-			
+			System.out.println("Brugerens information er fundet:");
 			System.out.println(userJSON);
 
 			
