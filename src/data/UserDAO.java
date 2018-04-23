@@ -45,7 +45,7 @@ public class UserDAO implements IUserDAO {
 		System.out.println("*** DAO: getUser_id '" + username + "' ***");
 		String query = "SELECT * FROM users WHERE username='" + username + "'";
 		int userId = 0;
-		
+
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
@@ -60,7 +60,7 @@ public class UserDAO implements IUserDAO {
 			throw new DALException("SQLException in getUser_id(): " + e.getMessage());
 		}
 	}
-	
+
 	@Override
 	public UserDTO getUser(String username) throws DALException {
 		System.out.println("-------------------DAO - getUser(" + username + ")-------------------");
@@ -77,7 +77,7 @@ public class UserDAO implements IUserDAO {
 
 			List<String> roleList = new ArrayList<String>();
 			if(rs.wasNull()) {throw new DALException("No users with this name exists");}
-			
+
 			while(rs.next()) {
 				userId = rs.getInt("user_id");
 				userName = rs.getString("username");
@@ -100,8 +100,8 @@ public class UserDAO implements IUserDAO {
 	public List<UserDTO> getUserList() throws DALException {
 		System.out.println("-------------------DAO - getUserList-------------------");
 		List<UserDTO> userList = new ArrayList<UserDTO>();
-		List<String> roleList= new ArrayList<>();
-		String query = "SELECT * FROM totalView WHERE NOT username='admin'";
+		String userQuery = "SELECT * FROM users WHERE NOT username='admin'";
+		String roleQuery  = "SELECT * from users_roles WHERE NOT users_id='1'";
 		int user_id = 0;
 		String userName = null;
 		String password = null;
@@ -109,8 +109,37 @@ public class UserDAO implements IUserDAO {
 		String cpr = null;
 		try {
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery(query); 
-			while (rs.next()) {
+			Statement stmt2 = connection.createStatement();
+			ResultSet rsUsers = stmt.executeQuery(userQuery); 
+			ResultSet rsRoles = stmt2.executeQuery(roleQuery); 
+			while (rsUsers.next()) {
+				user_id = rsUsers.getInt("user_id");
+				userName = rsUsers.getString("username");
+				password = rsUsers.getString("password");
+				ini = rsUsers.getString("ini");
+				cpr = rsUsers.getString("cpr");
+				UserDTO user = new UserDTO(user_id, userName, password, ini, cpr, null);
+				userList.add(user);
+			}
+
+			while(rsRoles.next()) {
+				for(UserDTO usr : userList) {
+					if(usr.getUser_id() == rsRoles.getInt("users_id")) {
+						if(usr.getRoles() == null) {
+							List<String> exRoleList = new ArrayList<String>();
+							String lel = rsRoles.getString("roles_id");
+							exRoleList.add(lel);
+							usr.setRoles(exRoleList);
+						} else {
+							List<String> exRoleList = usr.getRoles();
+							exRoleList.add(rsRoles.getString("roles_id"));
+							usr.setRoles(exRoleList);
+						}
+					}
+				}
+			}
+			
+			/*
 				if(user_id == rs.getInt("user_id") && user_id != 0) {
 					roleList.add(rs.getString("role_id"));
 				} else {
@@ -123,7 +152,9 @@ public class UserDAO implements IUserDAO {
 				}
 				UserDTO user = new UserDTO(user_id, userName, password, ini, cpr, roleList);
 				userList.add(user);
-			}
+			 */
+
+
 			/*System.out.println("Users gotten from server:");
 			for(UserDTO user : userList) {System.out.println(user.toString());}
 			System.out.println("");*/
