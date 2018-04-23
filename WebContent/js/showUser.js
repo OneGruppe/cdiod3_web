@@ -4,7 +4,7 @@
 
 $(document).ready(function() {
 	$("#retrieveUserButton").click(function() {
-		alert("works");
+		alert("Button clicked");
 		//var fruits = ["Banana", "Orange", "Apple", "Mango", "Lemon", "Kiwi"];
 			
 		$.ajax({
@@ -16,7 +16,7 @@ $(document).ready(function() {
 			success:function(data) {
 				alert(data);
 			}
-		});
+		})
 		return false;
 		
 	    /*var c, r, t;

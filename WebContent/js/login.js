@@ -19,7 +19,7 @@ $(document).ready(function() {
 					alert("Password doesn't match username, try again");
 				}
 			}
-		})
+		});
 		return false;
 	});
 	
