@@ -13,6 +13,7 @@ $(document).ready(function() {
 			method: "POST",
 			success:function(data) {
 				console.log(data);
+				
 				if((document.contains(document.getElementById("showUser_table")))){
 					document.getElementById("showUser_table").remove();
 					var c, r, t;

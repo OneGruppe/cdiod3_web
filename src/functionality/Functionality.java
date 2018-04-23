@@ -173,7 +173,7 @@ public class Functionality //implements IFunctionality{
 	public String showUser(@FormParam("username") String name) {
 		System.out.println("------------------FUNCTIONALITY--showUser()------------------");
 		JSONObject userJSON = new JSONObject();
-
+		
 		try {			
 			UserDTO user = dao.getUser(name);
 
