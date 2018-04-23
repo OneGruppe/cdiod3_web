@@ -29,7 +29,7 @@ $(document).ready(function() {
 				alert(data);
 				$(".loadToDiv").load("html/updateUser.html");
 			}
-		})
+		});
 		return false;
 	});
 });
