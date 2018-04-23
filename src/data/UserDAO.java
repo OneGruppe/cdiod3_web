@@ -129,23 +129,53 @@ public class UserDAO implements IUserDAO {
 					}
 				}
 			}
-			
-			/*
-				if(user_id == rs.getInt("user_id") && user_id != 0) {
-					roleList.add(rs.getString("role_id"));
-				} else {
-					user_id = rs.getInt("user_id");
-					userName = rs.getString("username");
-					password = rs.getString("password");
-					ini = rs.getString("ini");
-					cpr = rs.getString("cpr");
-					roleList.add(rs.getString("role_id"));
-				}
-				UserDTO user = new UserDTO(user_id, userName, password, ini, cpr, roleList);
+			return userList;
+
+		} catch (SQLException e) {
+			throw new DALException("SQLException in getUserList(): " + e.getMessage());
+		}
+	}
+	
+	public List<UserDTO> getUserListBackup() throws DALException {
+		List<UserDTO> userList = new ArrayList<UserDTO>();
+		String userQuery = "SELECT * FROM users";
+		String roleQuery  = "SELECT * from users_roles";
+		int user_id = 0;
+		String userName = null;
+		String password = null;
+		String ini = null;
+		String cpr = null;
+		try {
+			Statement stmt = connection.createStatement();
+			Statement stmt2 = connection.createStatement();
+			ResultSet rsUsers = stmt.executeQuery(userQuery); 
+			ResultSet rsRoles = stmt2.executeQuery(roleQuery); 
+			while (rsUsers.next()) {
+				user_id = rsUsers.getInt("user_id");
+				userName = rsUsers.getString("username");
+				password = rsUsers.getString("password");
+				ini = rsUsers.getString("ini");
+				cpr = rsUsers.getString("cpr");
+				UserDTO user = new UserDTO(user_id, userName, password, ini, cpr, null);
 				userList.add(user);
-			 */
+			}
 
-
+			while(rsRoles.next()) {
+				for(UserDTO usr : userList) {
+					if(usr.getUser_id() == rsRoles.getInt("users_id")) {
+						if(usr.getRoles() == null) {
+							List<String> exRoleList = new ArrayList<String>();
+							String lel = rsRoles.getString("roles_id");
+							exRoleList.add(lel);
+							usr.setRoles(exRoleList);
+						} else {
+							List<String> exRoleList = usr.getRoles();
+							exRoleList.add(rsRoles.getString("roles_id"));
+							usr.setRoles(exRoleList);
+						}
+					}
+				}
+			}
 			return userList;
 
 		} catch (SQLException e) {
@@ -196,8 +226,6 @@ public class UserDAO implements IUserDAO {
 			stmt.executeUpdate(usersQuery);
 		} catch (SQLException e) {
 			throw new DALException("SQLException in deleteUser(): " + e.getMessage());
-
-
 		}
 	}
 
