@@ -31,8 +31,7 @@ public class Functionality //implements IFunctionality{
 			if(dao.doConnection()) {
 				this.dao = dao;
 				System.out.println("\n** Connected to server **\n");
-				offdao.saveToFile(dao.getUserListBackup());
-				System.out.println("\n**- DATABASE-BACKUP SAVED -**\n");
+				offdao.saveToFile(dao.getUserList());
 			}
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
@@ -50,13 +49,14 @@ public class Functionality //implements IFunctionality{
 		UserDTO user = null;
 		try {
 			user = dao.getUser(usr);
-			if (user.getUserName() == null) {return isMatch;}
+			if (user.getUser_id() == 0 && pass.equals("")) {isMatch = "true";}
 			else if (user.getPassword().equals(pass)) {
 				for (String role : user.getRoles()) {
 					if (role.equals("1")){isMatch = "true";}
 				}
 			}
 			System.out.println("\nLOGIN: UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch + "\n");
+			if(!this.isoffline) {}
 			return isMatch;
 		} catch (DALException e) {
 			return isMatch;
@@ -201,7 +201,9 @@ public class Functionality //implements IFunctionality{
 		JSONObject userJSON = new JSONObject();
 		try {			
 			UserDTO user = dao.getUser(name);
-
+			if(user.getUser_id() == 0 || user.getUser_id() == 1) {
+				user = null;
+			}
 			userJSON.put("user_id",user.getUser_id());
 			userJSON.put("name", user.getUserName());
 			userJSON.put("password", user.getPassword());
@@ -212,7 +214,6 @@ public class Functionality //implements IFunctionality{
 		} catch (DALException e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println("\n");
 		return userJSON.toString();
 	}
 
@@ -227,7 +228,6 @@ public class Functionality //implements IFunctionality{
 		catch (DALException e) {
 			System.out.println(e.getMessage());
 		}
-		System.out.println(userArray);
 		return userArray.toString();
 	}
 

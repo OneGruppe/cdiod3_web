@@ -15,14 +15,6 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 
 	private List<UserDTO> users;
 
-	public OfflineUserDAO(){
-		try {
-			users = getUserList();
-		} catch (DALException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
 	public void saveToFile(List<UserDTO> userlist) throws DALException {
 		try {
 			users = getUserList();
@@ -68,10 +60,10 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		UserDTO user = null;
 		for (UserDTO usr : userList) {
 			if(usr.getUserName().equals(userName)) {
-				user = usr;
-				break;
+				return usr;
 			}
 		}
+			user = new UserDTO(0, null, null, null, null, null);
 		return user;
 	}
 
