@@ -10,17 +10,16 @@ import java.util.List;
 
 public class UserDAO implements IUserDAO {
 
-	Statement stmt = null;
-	Connection connection = null;
+	private Connection connection = null;
 
-	final String driverName = "com.mysql.jdbc.Driver";
-	String serverName = "91.100.3.26"; // Use this server.
-	String portNumber = "9865";
-	String projectName = "CDIO3";
-	String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
+	private final String driverName = "com.mysql.jdbc.Driver";
+	private String serverName = "91.100.3.26"; // Use this server.
+	private String portNumber = "9865";
+	private String projectName = "CDIO3";
+	private String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
 
-	String userName = "Eclipse-bruger";
-	String password = "ySmTL37uDjYZmzyn";
+	private String userName = "Eclipse-bruger";
+	private String password = "ySmTL37uDjYZmzyn";
 
 	/**
 	 * Opret testforbindelse, smider exception hvis connection ikke er muligt.

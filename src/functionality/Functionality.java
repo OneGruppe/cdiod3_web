@@ -18,8 +18,8 @@ import data.*;
 @Path("functionality")
 public class Functionality implements IFunctionality{
 
-	IUserDAO dao;
-	boolean isoffline = false;
+	private IUserDAO dao;
+	private boolean isoffline = false;
 
 	/**
 	 * Konstruktør der skaber forbindelse, såfremt database er offline, laves en forbindelse til lokal kopi (kræver tidligere forbindelse).
