@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 public class TestRest {
 
 	@GET
+	@Path("hello")
 	public String helloTest() {
 		return "Hello Test!";
 	}

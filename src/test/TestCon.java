@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import data.IUserDAO.DALException;
+
 public class TestCon {
 
 	Statement stmt = null;
@@ -24,7 +26,11 @@ public class TestCon {
 
 	private ArrayList<String> roomsArray;
 
-	public boolean doConnection() {
+	/**
+	 * Opret testforbindelse, smider exception hvis connection ikke er muligt.
+	 * @throws DALException
+	 */
+	public void doConnection() throws DALException {
 		try {
 			// Load the JDBC driver
 			Class.forName(driverName);
@@ -34,16 +40,17 @@ public class TestCon {
 
 		} catch (ClassNotFoundException e) {
 			// Could not find the database driver
-			System.out.println("ClassNotFoundException : " + e.getMessage());
-			return false;
+			throw new DALException("ClassNotFoundException: in doConnection(): " + e.getMessage());
 		} catch (SQLException e) {
 			// Could not connect to the database
-			System.out.println(e.getMessage());
-			return false;
+			throw new DALException("SQLException in doConnection() : " + e.getMessage());
 		}
-		return true;
 	}
 
+	/**
+	 * Viser liste over roller i databasen
+	 * @return ArrayList<String>
+	 */
 	public ArrayList<String> showListOfRoles() {
 		roomsArray = new ArrayList<String>();
 		String query = "SELECT * FROM roles";
@@ -64,6 +71,12 @@ public class TestCon {
 		}
 	}
 
+	/**
+	 * Svarer om der er en user med det password i databasen
+	 * @param usr username på brugeren
+	 * @param pass password på brugeren
+	 * @return boolean, true hvis bruger med password findes
+	 */
 	public boolean isUserAndPassCorrect(String usr, String pass) {
 		boolean isMatch = false;
 		String query = "SELECT * FROM users WHERE username='" + usr + "'";
