@@ -4,7 +4,6 @@ import data.*;
 import data.IUserDAO.DALException;
 
 public interface IFunctionality {
-	
 
 	/**
 	 * Changes the user object to a new user object, created with same ID.
@@ -14,7 +13,7 @@ public interface IFunctionality {
 	 * @param newIni of the user
 	 * @throws DALException - exception handling
 	 */
-	void changeUser(int id, String newName, String newPassword, String newIni) ;
+	void changeUser(int id, String newName, String newPassword, String newIni);
 
 	/**
 	 * Creates a user object, and writes that to the disk via. UserDAO
@@ -24,7 +23,7 @@ public interface IFunctionality {
 	 * @param cpr of the user
 	 * @throws DALException - exception handling
 	 */
-	void createUser(String name, String password, String ini, String cpr, String role) throws DALException ;
+	void createUser(String name, String password, String ini, String cpr, String role) throws DALException;
 
 	/**
 	 * Deletes a user from disk array.
@@ -62,7 +61,7 @@ public interface IFunctionality {
 	 * @throws DALException - exception handling
 	 */
 	String showUserListAdmin();
-	
+
 	boolean login(String usr, String pass);
 
 }

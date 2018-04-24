@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
 
 @Path("test_database")
 public class TestMain {
-	
+
 	@GET
 	public String getRoller() {
 
@@ -21,10 +21,9 @@ public class TestMain {
 		} else {
 			besked = "No connection: ";
 		}
-		
+
 		ArrayList<String> roles = con.showListOfRoles();
-		
-		
+
 		return besked + "<br><br>" + roles.toString();
 	}
 }

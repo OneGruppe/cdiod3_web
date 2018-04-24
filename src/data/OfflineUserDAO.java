@@ -17,15 +17,15 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		List<UserDTO> saveUserList = null;
 
 		try {
-			if(userlist.isEmpty()) {
+			if (userlist.isEmpty()) {
 				saveUserList = getUserList();
-			} else { 
+			} else {
 				saveUserList = userlist;
-				}
+			}
 			FileOutputStream saveFile = new FileOutputStream("users.sav");
 			ObjectOutputStream save = new ObjectOutputStream(saveFile);
 			save.writeObject(saveUserList);
-			save.close(); 
+			save.close();
 		} catch (IOException | DALException e) {
 			throw new DALException("Error in saveToFile: " + e.getMessage());
 		}
@@ -51,7 +51,7 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		}
 		UserDTO user = null;
 		for (UserDTO usr : userList) {
-			if(usr.getUserName().equals(userName)) {
+			if (usr.getUserName().equals(userName)) {
 				return usr;
 			}
 		}
@@ -84,12 +84,12 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		} catch (DALException e) {
 			userList = new ArrayList<UserDTO>();
 		} finally {
-			userList.add(user.getUser_id()-1, user);;
+			userList.add(user.getUser_id() - 1, user);
 			try {
 				FileOutputStream saveFile = new FileOutputStream("users.sav");
 				ObjectOutputStream save = new ObjectOutputStream(saveFile);
 				save.writeObject(userList);
-				save.close(); 
+				save.close();
 			} catch (IOException exc) {
 				throw new DALException("There was an error trying to create a user");
 			}

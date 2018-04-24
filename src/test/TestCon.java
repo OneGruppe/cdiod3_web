@@ -7,24 +7,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class TestCon{
+public class TestCon {
 
 	Statement stmt = null;
 	Connection connection = null;
 
 	String driverName = "com.mysql.jdbc.Driver";
 
-	String serverName = "91.100.3.26"; // Use this server. 
+	String serverName = "91.100.3.26"; // Use this server.
 	String portNumber = "9865";
 	String projectName = "CDIO3";
-	String url ="jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
+	String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
 
-	String username = "Eclipse-bruger"; 
+	String username = "Eclipse-bruger";
 	String password = "ySmTL37uDjYZmzyn";
-	
+
 	private ArrayList<String> roomsArray;
 
-	public boolean doConnection(){ 
+	public boolean doConnection() {
 		try {
 			// Load the JDBC driver
 			Class.forName(driverName);
@@ -33,15 +33,15 @@ public class TestCon{
 			connection = DriverManager.getConnection(url, username, password);
 
 		} catch (ClassNotFoundException e) {
-			// Could not find the database driver 
-			System.out.println("ClassNotFoundException : "+e.getMessage());
+			// Could not find the database driver
+			System.out.println("ClassNotFoundException : " + e.getMessage());
 			return false;
 		} catch (SQLException e) {
 			// Could not connect to the database
-			System.out.println(e.getMessage()); 
+			System.out.println(e.getMessage());
 			return false;
 		}
-		return true; 
+		return true;
 	}
 
 	public ArrayList<String> showListOfRoles() {
@@ -59,11 +59,11 @@ public class TestCon{
 
 		} catch (SQLException e) {
 			// Could not connect to the database
-			System.out.println(e.getMessage()); 
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}
-	
+
 	public boolean isUserAndPassCorrect(String usr, String pass) {
 		boolean isMatch = false;
 		String query = "SELECT * FROM users WHERE username='" + usr + "'";
@@ -72,7 +72,7 @@ public class TestCon{
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()) {
-				if (rs.getString("password").equals(pass)){
+				if (rs.getString("password").equals(pass)) {
 					isMatch = true;
 				}
 			}
@@ -80,7 +80,7 @@ public class TestCon{
 
 		} catch (SQLException e) {
 			// Could not connect to the database
-			System.out.println(e.getMessage()); 
+			System.out.println(e.getMessage());
 			return isMatch;
 		}
 	}

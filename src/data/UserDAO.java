@@ -14,16 +14,15 @@ public class UserDAO implements IUserDAO {
 	Connection connection = null;
 
 	final String driverName = "com.mysql.jdbc.Driver";
-	String serverName = "91.100.3.26"; // Use this server. 
+	String serverName = "91.100.3.26"; // Use this server.
 	String portNumber = "9865";
 	String projectName = "CDIO3";
-	String url ="jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
+	String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
 
-	String userName = "Eclipse-bruger"; 
+	String userName = "Eclipse-bruger";
 	String password = "ySmTL37uDjYZmzyn";
 
-	
-	public boolean doConnection() throws DALException{ 
+	public boolean doConnection() throws DALException {
 		try {
 			// Load the JDBC driver
 			Class.forName(driverName);
@@ -36,7 +35,7 @@ public class UserDAO implements IUserDAO {
 		} catch (SQLException e) {
 			throw new DALException("SQLException in doConnection() : " + e.getMessage());
 		}
-		return true; 
+		return true;
 	}
 
 	public int getUser_id(String username) throws DALException {
@@ -46,7 +45,7 @@ public class UserDAO implements IUserDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			while(rs.next()) {
+			while (rs.next()) {
 				userId = rs.getInt("user_id");
 			}
 			return userId;
@@ -70,9 +69,11 @@ public class UserDAO implements IUserDAO {
 			ResultSet rs = stmt.executeQuery(query);
 
 			List<String> roleList = new ArrayList<String>();
-			if(rs.wasNull()) {throw new DALException("No users with this name exists");}
+			if (rs.wasNull()) {
+				throw new DALException("No users with this name exists");
+			}
 
-			while(rs.next()) {
+			while (rs.next()) {
 				userId = rs.getInt("user_id");
 				userName = rs.getString("username");
 				password = rs.getString("password");
@@ -92,7 +93,7 @@ public class UserDAO implements IUserDAO {
 	public List<UserDTO> getUserList() throws DALException {
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		String userQuery = "SELECT * FROM users WHERE NOT username='admin'";
-		String roleQuery  = "SELECT * from users_roles WHERE NOT users_id='1'";
+		String roleQuery = "SELECT * from users_roles WHERE NOT users_id='1'";
 		int user_id = 0;
 		String userName = null;
 		String password = null;
@@ -101,8 +102,8 @@ public class UserDAO implements IUserDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			Statement stmt2 = connection.createStatement();
-			ResultSet rsUsers = stmt.executeQuery(userQuery); 
-			ResultSet rsRoles = stmt2.executeQuery(roleQuery); 
+			ResultSet rsUsers = stmt.executeQuery(userQuery);
+			ResultSet rsRoles = stmt2.executeQuery(roleQuery);
 			while (rsUsers.next()) {
 				user_id = rsUsers.getInt("user_id");
 				userName = rsUsers.getString("username");
@@ -113,10 +114,10 @@ public class UserDAO implements IUserDAO {
 				userList.add(user);
 			}
 
-			while(rsRoles.next()) {
-				for(UserDTO usr : userList) {
-					if(usr.getUser_id() == rsRoles.getInt("users_id")) {
-						if(usr.getRoles() == null) {
+			while (rsRoles.next()) {
+				for (UserDTO usr : userList) {
+					if (usr.getUser_id() == rsRoles.getInt("users_id")) {
+						if (usr.getRoles() == null) {
 							List<String> exRoleList = new ArrayList<String>();
 							String lel = rsRoles.getString("roles_id");
 							exRoleList.add(lel);
@@ -135,11 +136,11 @@ public class UserDAO implements IUserDAO {
 			throw new DALException("SQLException in getUserList(): " + e.getMessage());
 		}
 	}
-	
+
 	public List<UserDTO> getUserListBackup() throws DALException {
 		List<UserDTO> userList = new ArrayList<UserDTO>();
 		String userQuery = "SELECT * FROM users";
-		String roleQuery  = "SELECT * from users_roles";
+		String roleQuery = "SELECT * from users_roles";
 		int user_id = 0;
 		String userName = null;
 		String password = null;
@@ -148,8 +149,8 @@ public class UserDAO implements IUserDAO {
 		try {
 			Statement stmt = connection.createStatement();
 			Statement stmt2 = connection.createStatement();
-			ResultSet rsUsers = stmt.executeQuery(userQuery); 
-			ResultSet rsRoles = stmt2.executeQuery(roleQuery); 
+			ResultSet rsUsers = stmt.executeQuery(userQuery);
+			ResultSet rsRoles = stmt2.executeQuery(roleQuery);
 			while (rsUsers.next()) {
 				user_id = rsUsers.getInt("user_id");
 				userName = rsUsers.getString("username");
@@ -160,10 +161,10 @@ public class UserDAO implements IUserDAO {
 				userList.add(user);
 			}
 
-			while(rsRoles.next()) {
-				for(UserDTO usr : userList) {
-					if(usr.getUser_id() == rsRoles.getInt("users_id")) {
-						if(usr.getRoles() == null) {
+			while (rsRoles.next()) {
+				for (UserDTO usr : userList) {
+					if (usr.getUser_id() == rsRoles.getInt("users_id")) {
+						if (usr.getRoles() == null) {
 							List<String> exRoleList = new ArrayList<String>();
 							String lel = rsRoles.getString("roles_id");
 							exRoleList.add(lel);
@@ -187,18 +188,16 @@ public class UserDAO implements IUserDAO {
 	public void createUser(UserDTO user) throws DALException {
 		List<String> roleList = user.getRoles();
 
-		String userQuery = "INSERT INTO users (username, password, ini, cpr) "
-				+ "VALUES(" + "'" + user.getUserName() + "'," 
-				+ "'" + user.getPassword() + "'," 
-				+ "'" + user.getIni() + "'," 
-				+ "'" + user.getCpr() + "')";
+		String userQuery = "INSERT INTO users (username, password, ini, cpr) " + "VALUES(" + "'" + user.getUserName()
+				+ "'," + "'" + user.getPassword() + "'," + "'" + user.getIni() + "'," + "'" + user.getCpr() + "')";
 
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(userQuery);
 			for (String role : roleList) {
 				Statement stmt2 = connection.createStatement();
-				stmt2.executeUpdate("INSERT INTO users_roles VALUES (" + getUser_id(user.getUserName()) + ", " +  role + ")");
+				stmt2.executeUpdate(
+						"INSERT INTO users_roles VALUES (" + getUser_id(user.getUserName()) + ", " + role + ")");
 			}
 
 		} catch (SQLException e) {
@@ -208,7 +207,9 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
-		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword() + "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE user_id='" + user.getUser_id() + "'";
+		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword()
+				+ "', ini ='" + user.getIni() + "',cpr ='" + user.getCpr() + "' WHERE user_id='" + user.getUser_id()
+				+ "'";
 		try {
 			Statement stmt = connection.createStatement();
 			stmt.executeUpdate(query);
@@ -219,7 +220,7 @@ public class UserDAO implements IUserDAO {
 
 	@Override
 	public void deleteUser(String userName) throws DALException {
-		int user_id = getUser_id(userName);
+		getUser_id(userName);
 		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "'";
 		try {
 			Statement stmt = connection.createStatement();
