@@ -30,15 +30,14 @@ public class Functionality //implements IFunctionality{
 			offdao = new OfflineUserDAO();
 			if(dao.doConnection()) {
 				this.dao = dao;
-				System.out.println("\n** Connected to server **\n");
 				offdao.saveToFile(dao.getUserList());
+				System.out.println("SQL-call - Server: ONLINE\n");
 			}
 		} catch (DALException e) {
-			System.out.println(e.getMessage());
-				offdao = new OfflineUserDAO();
-				this.dao = offdao;
-				isoffline = true;
-				System.out.println("\n** Server is offline **\n");
+			System.out.println("SQL-call - Server: *OFFLINE*\n");
+			offdao = new OfflineUserDAO();
+			this.dao = offdao;
+			isoffline = true;
 		}
 	}
 
@@ -49,13 +48,12 @@ public class Functionality //implements IFunctionality{
 		UserDTO user = null;
 		try {
 			user = dao.getUser(usr);
-			if (user.getUser_id() == 0 && pass.equals("")) {isMatch = "true";}
+			if (usr.equals("admin") && pass.equals("")) {isMatch = "true";}
 			else if (user.getPassword().equals(pass)) {
 				for (String role : user.getRoles()) {
 					if (role.equals("1")){isMatch = "true";}
 				}
 			}
-			System.out.println("\nLOGIN: UserName: " + usr + ", password: " + pass + ", does match? = " + isMatch + "\n");
 			if(!this.isoffline) {}
 			return isMatch;
 		} catch (DALException e) {
@@ -74,9 +72,8 @@ public class Functionality //implements IFunctionality{
 				System.out.println("Logout error: " + e.getMessage());
 				return false;
 			}
-		} else{
-			return true;
 		}
+		return true;
 	}
 
 	@POST
@@ -202,7 +199,7 @@ public class Functionality //implements IFunctionality{
 		try {			
 			UserDTO user = dao.getUser(name);
 			if(user.getUser_id() == 0 || user.getUser_id() == 1) {
-				user = null;
+				return "";
 			}
 			userJSON.put("user_id",user.getUser_id());
 			userJSON.put("name", user.getUserName());
@@ -212,7 +209,7 @@ public class Functionality //implements IFunctionality{
 			userJSON.put("roles", user.getRoles());
 
 		} catch (DALException e) {
-			System.out.println(e.getMessage());
+			System.out.println("Fejl i showUser" + e.getMessage());
 		}
 		return userJSON.toString();
 	}

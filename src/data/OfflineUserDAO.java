@@ -11,41 +11,33 @@ import java.util.List;
 
 public class OfflineUserDAO implements IUserDAO, Serializable {
 
-	private static final long serialVersionUID = 1901505897256342849L;
-
-	private List<UserDTO> users;
+	private static final long serialVersionUID = -6910394502110880451L;
 
 	public void saveToFile(List<UserDTO> userlist) throws DALException {
+		List<UserDTO> saveUserList = null;
+
 		try {
-			users = getUserList();
-		} catch (DALException e) {
-			users = new ArrayList<UserDTO>();
-		} finally {
-			users.clear();
-			users = userlist;
-			for(int i = 0 ; i < userlist.size() ; i++) {
-				if(userlist.get(i).getUserName().equals("admin")) {
-					userlist.remove(i);
-				}	
-			}
-			try {
-				FileOutputStream saveFile = new FileOutputStream("OfflineUsers.save");
-				ObjectOutputStream save = new ObjectOutputStream(saveFile);
-				save.writeObject(users);
-				save.close(); 
-			} catch (IOException exc) {
-				throw new DALException("There was an error trying to create a user");
-			}
+			if(userlist.isEmpty()) {
+				saveUserList = getUserList();
+			} else { 
+				saveUserList = userlist;
+				}
+			FileOutputStream saveFile = new FileOutputStream("users.sav");
+			ObjectOutputStream save = new ObjectOutputStream(saveFile);
+			save.writeObject(saveUserList);
+			save.close(); 
+		} catch (IOException | DALException e) {
+			throw new DALException("Error in saveToFile: " + e.getMessage());
 		}
 	}
 
 	@Override
 	public UserDTO getUser(String userName) throws DALException {
 		// Create the data objects for us to restore.
-		ArrayList<UserDTO> userList = new ArrayList<UserDTO>();
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 		try {
 			// Open file to read from, named users.sav.
-			FileInputStream saveFile = new FileInputStream("OfflineUsers.save");
+			FileInputStream saveFile = new FileInputStream("users.sav");
 			// Create an ObjectInputStream to get objects from save file.
 			ObjectInputStream input = new ObjectInputStream(saveFile);
 			// Now we do the restore.
@@ -63,16 +55,16 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 				return usr;
 			}
 		}
-			user = new UserDTO(0, null, null, null, null, null);
+		user = new UserDTO(0, null, null, null, null, null);
 		return user;
 	}
 
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
 		// Create the data objects for us to restore.
-		ArrayList<UserDTO> userList = (ArrayList<UserDTO>) this.users;
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 		try {
-			FileInputStream saveFile = new FileInputStream("OfflineUsers.save");
+			FileInputStream saveFile = new FileInputStream("users.sav");
 			ObjectInputStream input = new ObjectInputStream(saveFile);
 			userList = (ArrayList<UserDTO>) input.readObject();
 			input.close();
@@ -86,16 +78,17 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 
 	@Override
 	public void createUser(UserDTO user) throws DALException {
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 		try {
-			users = getUserList();
+			userList = getUserList();
 		} catch (DALException e) {
-			users = new ArrayList<UserDTO>();
+			userList = new ArrayList<UserDTO>();
 		} finally {
-			users.add(user.getUser_id()-1, user);;
+			userList.add(user.getUser_id()-1, user);;
 			try {
-				FileOutputStream saveFile = new FileOutputStream("OfflineUsers.save");
+				FileOutputStream saveFile = new FileOutputStream("users.sav");
 				ObjectOutputStream save = new ObjectOutputStream(saveFile);
-				save.writeObject(users);
+				save.writeObject(userList);
 				save.close(); 
 			} catch (IOException exc) {
 				throw new DALException("There was an error trying to create a user");
@@ -105,9 +98,9 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
-		ArrayList<UserDTO> userList = (ArrayList<UserDTO>) this.users;
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 		try {
-			FileInputStream saveFile = new FileInputStream("OfflineUsers.save");
+			FileInputStream saveFile = new FileInputStream("users.sav");
 			ObjectInputStream input = new ObjectInputStream(saveFile);
 			userList = (ArrayList<UserDTO>) input.readObject();
 			input.close();
@@ -125,7 +118,7 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 			}
 		}
 		try {
-			FileOutputStream saveFile = new FileOutputStream("OfflineUsers.save");
+			FileOutputStream saveFile = new FileOutputStream("users.sav");
 			ObjectOutputStream save = new ObjectOutputStream(saveFile);
 			save.writeObject(userList);
 			save.close();
@@ -137,9 +130,9 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 
 	@Override
 	public void deleteUser(String userName) throws DALException {
-		ArrayList<UserDTO> userList = new ArrayList<UserDTO>();
+		List<UserDTO> userList = new ArrayList<UserDTO>();
 		try {
-			FileInputStream saveFile = new FileInputStream("OfflineUsers.save");
+			FileInputStream saveFile = new FileInputStream("users.sav");
 			ObjectInputStream input = new ObjectInputStream(saveFile);
 			userList = (ArrayList<UserDTO>) input.readObject();
 			input.close();
@@ -154,7 +147,7 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 			}
 		}
 		try {
-			FileOutputStream saveFile = new FileOutputStream("OfflineUsers.save");
+			FileOutputStream saveFile = new FileOutputStream("users.sav");
 			ObjectOutputStream save = new ObjectOutputStream(saveFile);
 			save.writeObject(userList);
 			save.close();
