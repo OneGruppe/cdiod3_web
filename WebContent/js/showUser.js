@@ -12,7 +12,6 @@ $(document).ready(function() {
 			contenttype: "application/x-ww-form-urlencoded",
 			method: "POST",
 			success:function(data) {
-				console.log(data);
 				
 				if((document.contains(document.getElementById("showUser_table")))){
 					document.getElementById("showUser_table").remove();
