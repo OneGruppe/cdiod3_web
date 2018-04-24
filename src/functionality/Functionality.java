@@ -16,22 +16,24 @@ import data.IUserDAO.DALException;
 import data.*;
 
 @Path("functionality")
-public class Functionality // implements IFunctionality{
-{
+public class Functionality implements IFunctionality{
+
 	IUserDAO dao;
 	boolean isoffline = false;
 
+	/**
+	 * Konstruktør der skaber forbindelse, såfremt database er offline, laves en forbindelse til lokal kopi (kræver tidligere forbindelse).
+	 */
 	public Functionality() {
 		UserDAO dao;
 		OfflineUserDAO offdao = null;
 		try {
 			dao = new UserDAO();
 			offdao = new OfflineUserDAO();
-			if (dao.doConnection()) {
-				this.dao = dao;
-				offdao.saveToFile(dao.getUserList());
-				System.out.println("SQL-call - Server: ONLINE\n");
-			}
+			dao.doConnection();
+			this.dao = dao;
+			offdao.saveToFile(dao.getUserList());
+			System.out.println("SQL-call - Server: ONLINE\n");
 		} catch (DALException e) {
 			System.out.println("SQL-call - Server: *OFFLINE*\n");
 			offdao = new OfflineUserDAO();
@@ -40,23 +42,25 @@ public class Functionality // implements IFunctionality{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see functionality.IFunctionality
+	 */
+	@Override
 	@POST
 	@Path("login")
-	public String login(@FormParam("username") String usr, @FormParam("password") String pass) {
-		String isMatch = "false";
+	public boolean login(@FormParam("username") String usr, @FormParam("password") String pass) {
+		boolean isMatch = false;
 		UserDTO user = null;
 		try {
 			user = dao.getUser(usr);
 			if (usr.equals("admin") && pass.equals("")) {
-				isMatch = "true";
+				isMatch = true;
 			} else if (user.getPassword().equals(pass)) {
 				for (String role : user.getRoles()) {
 					if (role.equals("1")) {
-						isMatch = "true";
+						isMatch = true;
 					}
 				}
-			}
-			if (!this.isoffline) {
 			}
 			return isMatch;
 		} catch (DALException e) {
@@ -64,6 +68,10 @@ public class Functionality // implements IFunctionality{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see functionality.IFunctionality
+	 */
+	@Override
 	@POST
 	@Path("logout")
 	public boolean logout() {
@@ -79,6 +87,10 @@ public class Functionality // implements IFunctionality{
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see functionality.IFunctionality
+	 */
+	@Override
 	@POST
 	@Path("createUser")
 	public String createUser(@FormParam("username") String name, @FormParam("password") String password,
@@ -154,6 +166,10 @@ public class Functionality // implements IFunctionality{
 		return returnValue;
 	}
 
+	/* (non-Javadoc)
+	 * @see functionality.IFunctionality
+	 */
+	@Override
 	@POST
 	@Path("updateUser")
 	public String changeUser(@FormParam("username") String userName, @FormParam("newName") String newName,
@@ -169,8 +185,7 @@ public class Functionality // implements IFunctionality{
 		try {
 			existingUsers = dao.getUserList();
 		} catch (DALException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println(e1.getMessage());
 		}
 		for (UserDTO usr : existingUsers) {
 			if (usr.getUserName().equals(newName)) {
@@ -179,9 +194,6 @@ public class Functionality // implements IFunctionality{
 			if (usr.getIni().equals(newIni)) {
 				return "Ini already exist, try again";
 			}
-			// Skal der være mulighed for at ændre CPR?
-			// if(usr.getCpr().equals(newCpr) ) { return "CPR-number already exist, try
-			// again";}
 		}
 
 		if (!newName.matches("[\\w]{4,20}$")) {
@@ -196,8 +208,6 @@ public class Functionality // implements IFunctionality{
 		if (!newIni.matches("[\\w]{1,3}$")) {
 			return "Initials does not match a-å while being bewteen 1 and 3 characters";
 		}
-		// if (!newCpr.matches("[\\d{6}\\-\\d{4}")) {return "CPR does not match 6 digits
-		// dash 4 digits";}
 
 		try {
 			UserDTO user = dao.getUser(userName);
@@ -217,6 +227,10 @@ public class Functionality // implements IFunctionality{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see functionality.IFunctionality
+	 */
+	@Override
 	@POST
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
@@ -243,6 +257,10 @@ public class Functionality // implements IFunctionality{
 		return returnString;
 	}
 
+	/* (non-Javadoc)
+	 * @see functionality.IFunctionality
+	 */
+	@Override
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("showUser")
@@ -266,6 +284,10 @@ public class Functionality // implements IFunctionality{
 		return userJSON.toString();
 	}
 
+	/* (non-Javadoc)
+	 * @see functionality.IFunctionality
+	 */
+	@Override
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("showAllUsers")

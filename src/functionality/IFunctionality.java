@@ -1,67 +1,64 @@
 package functionality;
 
-import data.*;
-import data.IUserDAO.DALException;
-
 public interface IFunctionality {
 
 	/**
-	 * Changes the user object to a new user object, created with same ID.
-	 * @param id of the user
-	 * @param newName of the user
-	 * @param newPassword of the user
-	 * @param newIni of the user
-	 * @throws DALException - exception handling
+	 * Styrer om man kommer ind på siden eller ej
+	 * @param usr på brugeren
+	 * @param pass på brugeren
+	 * @return boolean der styrer om man logger ind eller ej.
 	 */
-	void changeUser(int id, String newName, String newPassword, String newIni);
+	boolean login(String usr, String pass);
 
 	/**
-	 * Creates a user object, and writes that to the disk via. UserDAO
-	 * @param name of the user
-	 * @param password of the user
-	 * @param ini of the user
-	 * @param cpr of the user
-	 * @throws DALException - exception handling
+	 * Såfremt databasen er online, så gemmes der en liste til disk.
+	 * @return boolean der styrer der kommer fejl eller ej til siden.
 	 */
-	void createUser(String name, String password, String ini, String cpr, String role) throws DALException;
+	boolean logout();
 
 	/**
-	 * Deletes a user from disk array.
-	 * @param id of the user
-	 * @throws DALException - exception handling
+	 * Laver ny bruger i database
+	 * @param name på brugeren
+	 * @param password på brugeren
+	 * @param ini på brugeren
+	 * @param cpr på brugeren
+	 * @param admin rolle på brugeren
+	 * @param laborant rolle på brugeren
+	 * @param farmaceut rolle på brugeren
+	 * @param produktionsleder rolle på brugeren
+	 * @return retur-string der vises på siden med alert();
 	 */
-	void deleteUser(int id);
+	String createUser(String name, String password, String ini, String cpr, boolean admin, boolean laborant,
+			boolean farmaceut, boolean produktionsleder);
 
 	/**
-	 * Get a user from the disk, returns object, to print its toString()
-	 * @param id of the user
-	 * @return the object (UserDTO)
-	 * @throws DALException - exception handling
+	 * Ændrer bruger i database
+	 * @param userName på brugeren
+	 * @param newName på brugeren
+	 * @param newPassword på brugeren
+	 * @param newIni på brugeren
+	 * @return retur-string der vises på siden med alert();
 	 */
-	UserDTO showUser(int id);
+	String changeUser(String userName, String newName, String newPassword, String newIni);
 
 	/**
-	 * Get a toString from the disk, returns object with 
-	 * @param id of the user
-	 * @return a string containing the objects toString() + password and CPR from user.
-	 * @throws DALException - exception handling
+	 * Sletter bruger i database
+	 * @param userName
+	 * @return retur-string der vises på siden med alert();
 	 */
-	String showUserAdmin(int id);
+	String deleteUser(String userName);
 
 	/**
-	 * String containing users
-	 * @return a string with all objects toString() combined.
-	 * @throws DALException - exception handling
+	 * Viser én bruger fra databasen på side
+	 * @param name
+	 * @return JSON-array med user-objekter, konverteret til string, vises som tabel på siden
+	 */
+	String showUser(String name);
+
+	/**
+	 * Viser en liste over brugere fra databasen på side
+	 * @return JSON-array med et array af user-objekter, konverteret til string, vises som tabel på siden
 	 */
 	String showUserList();
-
-	/**
-	 * String containing users (admin)
-	 * @return a string containing all the objects toString() + password and CPR from user.
-	 * @throws DALException - exception handling
-	 */
-	String showUserListAdmin();
-
-	boolean login(String usr, String pass);
 
 }
