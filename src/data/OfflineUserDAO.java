@@ -31,6 +31,10 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#getUser(java.lang.String)
+	 */
 	@Override
 	public UserDTO getUser(String userName) throws DALException {
 		// Create the data objects for us to restore.
@@ -59,6 +63,10 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		return user;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#getUserList()
+	 */
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
 		// Create the data objects for us to restore.
@@ -76,6 +84,10 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		return userList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#createUser(data.UserDTO)
+	 */
 	@Override
 	public void createUser(UserDTO user) throws DALException {
 		List<UserDTO> userList = new ArrayList<UserDTO>();
@@ -96,6 +108,10 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#updateUser(data.UserDTO)
+	 */
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
 		List<UserDTO> userList = new ArrayList<UserDTO>();
@@ -128,6 +144,10 @@ public class OfflineUserDAO implements IUserDAO, Serializable {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#deleteUser(java.lang.String)
+	 */
 	@Override
 	public void deleteUser(String userName) throws DALException {
 		List<UserDTO> userList = new ArrayList<UserDTO>();

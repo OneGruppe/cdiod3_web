@@ -22,7 +22,11 @@ public class UserDAO implements IUserDAO {
 	String userName = "Eclipse-bruger";
 	String password = "ySmTL37uDjYZmzyn";
 
-	public boolean doConnection() throws DALException {
+	/**
+	 * Opret testforbindelse, smider exception hvis connection ikke er muligt.
+	 * @throws DALException
+	 */
+	public void doConnection() throws DALException {
 		try {
 			// Load the JDBC driver
 			Class.forName(driverName);
@@ -35,10 +39,15 @@ public class UserDAO implements IUserDAO {
 		} catch (SQLException e) {
 			throw new DALException("SQLException in doConnection() : " + e.getMessage());
 		}
-		return true;
 	}
 
-	public int getUser_id(String username) throws DALException {
+	/**
+	 * getUser_idFromDatabase giver et userId, til brug af SQL sætnings-sendinger, bruges kun online.
+	 * @param username brugernavn
+	 * @return user_id på brugeren
+	 * @throws DALException såfremt en SQL fejl sker.
+	 */
+	public int getUser_idFromDatabase(String username){
 		String query = "SELECT * FROM users WHERE username='" + username + "'";
 		int userId = 0;
 
@@ -51,10 +60,15 @@ public class UserDAO implements IUserDAO {
 			return userId;
 
 		} catch (SQLException e) {
-			throw new DALException("SQLException in getUser_id(): " + e.getMessage());
+			System.out.println("SQLException in getUser_id(): " + e.getMessage());
+			return userId;
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#getUser(java.lang.String)
+	 */
 	@Override
 	public UserDTO getUser(String username) throws DALException {
 		String query = "SELECT * FROM totalView WHERE username='" + username + "'";
@@ -89,6 +103,10 @@ public class UserDAO implements IUserDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#getUserList()
+	 */
 	@Override
 	public List<UserDTO> getUserList() throws DALException {
 		List<UserDTO> userList = new ArrayList<UserDTO>();
@@ -137,53 +155,10 @@ public class UserDAO implements IUserDAO {
 		}
 	}
 
-	public List<UserDTO> getUserListBackup() throws DALException {
-		List<UserDTO> userList = new ArrayList<UserDTO>();
-		String userQuery = "SELECT * FROM users";
-		String roleQuery = "SELECT * from users_roles";
-		int user_id = 0;
-		String userName = null;
-		String password = null;
-		String ini = null;
-		String cpr = null;
-		try {
-			Statement stmt = connection.createStatement();
-			Statement stmt2 = connection.createStatement();
-			ResultSet rsUsers = stmt.executeQuery(userQuery);
-			ResultSet rsRoles = stmt2.executeQuery(roleQuery);
-			while (rsUsers.next()) {
-				user_id = rsUsers.getInt("user_id");
-				userName = rsUsers.getString("username");
-				password = rsUsers.getString("password");
-				ini = rsUsers.getString("ini");
-				cpr = rsUsers.getString("cpr");
-				UserDTO user = new UserDTO(user_id, userName, password, ini, cpr, null);
-				userList.add(user);
-			}
-
-			while (rsRoles.next()) {
-				for (UserDTO usr : userList) {
-					if (usr.getUser_id() == rsRoles.getInt("users_id")) {
-						if (usr.getRoles() == null) {
-							List<String> exRoleList = new ArrayList<String>();
-							String lel = rsRoles.getString("roles_id");
-							exRoleList.add(lel);
-							usr.setRoles(exRoleList);
-						} else {
-							List<String> exRoleList = usr.getRoles();
-							exRoleList.add(rsRoles.getString("roles_id"));
-							usr.setRoles(exRoleList);
-						}
-					}
-				}
-			}
-			return userList;
-
-		} catch (SQLException e) {
-			throw new DALException("SQLException in getUserList(): " + e.getMessage());
-		}
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#createUser(data.UserDTO)
+	 */
 	@Override
 	public void createUser(UserDTO user) throws DALException {
 		List<String> roleList = user.getRoles();
@@ -197,7 +172,7 @@ public class UserDAO implements IUserDAO {
 			for (String role : roleList) {
 				Statement stmt2 = connection.createStatement();
 				stmt2.executeUpdate(
-						"INSERT INTO users_roles VALUES (" + getUser_id(user.getUserName()) + ", " + role + ")");
+						"INSERT INTO users_roles VALUES (" + getUser_idFromDatabase(user.getUserName()) + ", " + role + ")");
 			}
 
 		} catch (SQLException e) {
@@ -205,6 +180,10 @@ public class UserDAO implements IUserDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#updateUser(data.UserDTO)
+	 */
 	@Override
 	public void updateUser(UserDTO user) throws DALException {
 		String query = "UPDATE users SET username ='" + user.getUserName() + "', password ='" + user.getPassword()
@@ -218,9 +197,13 @@ public class UserDAO implements IUserDAO {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see data.IUserDAO#deleteUser(java.lang.String)
+	 */
 	@Override
 	public void deleteUser(String userName) throws DALException {
-		getUser_id(userName);
+		getUser_idFromDatabase(userName);
 		String usersQuery = "DELETE FROM users WHERE username ='" + userName + "'";
 		try {
 			Statement stmt = connection.createStatement();
