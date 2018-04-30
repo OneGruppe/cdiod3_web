@@ -5,26 +5,30 @@ import java.util.ArrayList;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
+import data.IUserDAO.DALException;
+
 @Path("test_database")
 public class TestMain {
-	
+
+	/**
+	 * Viser rollerne på hjemmeside med GET metode
+	 */
 	@GET
-	public String getRoller() {
+	@Path("getRoles")
+	public String getRoles() {
 
 		// Lav objekt af testConnection
 		TestCon con = new TestCon();
 
 		String besked;
 		// Forbindelse
-		if (con.doConnection()) {
+		try {
+			con.doConnection();
 			besked = "Connection is established: ";
-		} else {
-			besked = "No connection: ";
+		} catch (DALException e) {
+			return "No connection: ";
 		}
-		
 		ArrayList<String> roles = con.showListOfRoles();
-		
-		
 		return besked + "<br><br>" + roles.toString();
 	}
 }
