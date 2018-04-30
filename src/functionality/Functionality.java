@@ -137,16 +137,16 @@ public class Functionality implements IFunctionality{
 		}
 
 		if (!name.matches("[\\w]{4,20}$")) {
-			return "Username does not match a-å or 0-9 while being between 4 and 20 characters";
+			return "Username does not match a-z or 0-9 while being between 4 and 20 characters";
 		}
 		if (name.equals("admin") || name.equals("Admin")) {
 			return "Invalid username";
 		}
 		if (!password.matches("[\\w]{4,20}$")) {
-			return "Password does not match a-å or 0-9 while being between 4 and 20 characters";
+			return "Password does not match a-z or 0-9 while being between 4 and 20 characters";
 		}
 		if (!ini.matches("[\\w]{1,3}$")) {
-			return "Initials does not match a-å while being bewteen 1 and 3 characters";
+			return "Initials does not match a-z while being bewteen 1 and 3 characters";
 		}
 		if (!cpr.matches("\\d{6}\\-\\d{4}")) {
 			return "CPR does not match 6 digits dash 4 digits";
@@ -199,16 +199,16 @@ public class Functionality implements IFunctionality{
 		}
 
 		if (!newName.matches("[\\w]{4,20}$")) {
-			return "Username does not match a-å or 0-9 while being between 4 and 20 characters";
+			return "Username does not match a-z or 0-9 while being between 4 and 20 characters";
 		}
 		if (newName.equals("admin") || newName.equals("Admin")) {
 			return "Invalid username";
 		}
 		if (!newPassword.matches("[\\w]{4,20}$")) {
-			return "Password does not match a-å or 0-9 while being between 4 and 20 characters";
+			return "Password does not match a-z or 0-9 while being between 4 and 20 characters";
 		}
 		if (!newIni.matches("[\\w]{1,3}$")) {
-			return "Initials does not match a-å while being bewteen 1 and 3 characters";
+			return "Initials does not match a-z while being bewteen 1 and 3 characters";
 		}
 
 		try {
