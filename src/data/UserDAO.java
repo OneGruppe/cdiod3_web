@@ -13,13 +13,22 @@ public class UserDAO implements IUserDAO {
 	private Connection connection = null;
 
 	private final String driverName = "com.mysql.jdbc.Driver";
+	
+	/* Offline MySQL server med 'database_backup.sql' */
+	//private String serverName = localhost
+	// String portNumer = "3306"
+	//private String userName = "root";
+	//private String password = "password";
+	
+	/* Online MySQL server med remote connection */
 	private String serverName = "91.100.3.26"; // Use this server.
 	private String portNumber = "9865";
-	private String projectName = "CDIO3";
-	private String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
-
 	private String userName = "Eclipse-bruger";
 	private String password = "ySmTL37uDjYZmzyn";
+
+	/* Databasenavn */
+	private String projectName = "CDIO3";
+	private String url = "jdbc:mysql://" + serverName + ":" + portNumber + "/" + projectName;
 
 	/**
 	 * Opret testforbindelse, smider exception hvis connection ikke er muligt.
