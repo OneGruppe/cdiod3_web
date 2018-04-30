@@ -35,9 +35,9 @@ public class Functionality implements IFunctionality{
 			dao.doConnection();
 			this.dao = dao;
 			offdao.saveToFile(dao.getUserList());
-			System.out.println("SQL-call - Server: ONLINE\n");
+			System.out.println("SQL-Server: ONLINE\n");
 		} catch (DALException e) {
-			System.out.println("SQL-call - Server: *OFFLINE*\n");
+			System.out.println("SQL-Server: *OFFLINE*\n");
 			offdao = new OfflineUserDAO();
 			this.dao = offdao;
 			isoffline = true;
