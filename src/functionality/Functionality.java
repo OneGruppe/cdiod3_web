@@ -3,7 +3,9 @@ package functionality;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -72,7 +74,7 @@ public class Functionality implements IFunctionality{
 	 * @see functionality.IFunctionality
 	 */
 	@Override
-	@POST
+	@GET
 	@Path("logout")
 	public boolean logout() {
 		if (isoffline == false) {
@@ -231,7 +233,7 @@ public class Functionality implements IFunctionality{
 	 * @see functionality.IFunctionality
 	 */
 	@Override
-	@POST
+	@DELETE
 	@Path("deleteUser")
 	public String deleteUser(@FormParam("username") String userName) {
 		if (this.isoffline) {
@@ -288,7 +290,7 @@ public class Functionality implements IFunctionality{
 	 * @see functionality.IFunctionality
 	 */
 	@Override
-	@POST
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("showAllUsers")
 	public String showUserList() {

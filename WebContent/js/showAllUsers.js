@@ -4,13 +4,12 @@
 
 $(document).ready(function() {
 
-	//$("#retrieveAllUsersButton").click(function() {
 		$.ajax({
 			url:"rest/functionality/showAllUsers",
 			data: $('#showUser_search').serialize(),
 			dataType: "json",
 			contenttype: "application/x-ww-form-urlencoded",
-			method: "POST",
+			method: "GET",
 			success:function(data) {
 
 				if((document.contains(document.getElementById("showUser_table")))){
@@ -93,6 +92,5 @@ $(document).ready(function() {
 				}
 			})
 			return false;
-	//	});
 
 	});

@@ -10,7 +10,7 @@ $(document).ready(function() {
 			url:"rest/functionality/deleteUser",
 			data: $('#targetUsername').serialize(),
 			contenttype: "application/x-ww-form-urlencoded",
-			method: "POST",
+			method: "DELETE",
 			success:function(data) {
 				alert(data);
 			$(".loadToDiv").load("html/deleteUser.html");

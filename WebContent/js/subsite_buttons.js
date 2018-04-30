@@ -38,7 +38,7 @@ $(document).ready(function() {
 	$("#logoutButton").click(function() {
 		$.ajax({
 			url:"rest/functionality/logout",
-			method: "POST",
+			method: "GET",
 			success:function(data) {
 				if (data == "true"){
 					window.location.reload();    
