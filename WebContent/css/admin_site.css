@@ -1,0 +1,113 @@
+body {
+	background-color: #e0e0e0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #2d324e;
+}
+
+h4 {
+	margin-bottom: 75px;
+}
+
+.loadToDiv {
+	width: 1140px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.adminButtons {
+	position: fixed;
+	width: 720px;
+	height: 10px;
+	top: 115px;
+	padding-top: 7px;
+	padding-left: 1px;
+	padding-bottom: 20px;
+	background-color: #e3e9ef;
+	border: 1.5px solid #383838;
+	font-family: sans-serif;
+	display: inline;
+}
+
+button {
+	width: 90px;
+	height: 20px;
+	background-color: #521010;
+	color: white;
+	border: .5px solid black;
+	margin-left: 8px;
+}
+
+button:hover {
+	cursor: pointer;
+	background-color: #00001b;
+	color: #edcbcb;
+}
+
+#retrieveAllUsersButton {
+	float: left;
+	margin-left: 0;
+	width: 180px;
+	height: 30px;
+}
+
+label {
+	font-weight: 600;
+	color: #15345f;
+}
+
+.login {
+	width: 280px;
+	height: 100px;
+	background-color: #fff;
+	border: 1px solid black;
+	--box-shadow-color: #00001b;
+	box-shadow: 10px 5px 15px var(--box-shadow-color);
+	font-family: sans-serif;
+	padding: 25px;
+	padding-bottom: 90px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15%;
+	margin-bottom: auto;
+}
+
+form {
+	display: table;
+}
+
+input {
+	margin-left: 5px;	
+}
+
+#username {
+	margin-left: 25px;
+	margin-bottom: 20px;
+}
+
+#password {
+	margin-left: 25px;
+}
+
+#showUser_table {
+	margin-top: 65px;
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.table_top {
+	font-weight: bold;
+	background-color: #ddddd0;
+}
+
+.table_content {
+	background-color: rgba(255, 255, 255, .4);
+}
+
+td, th {
+	border: 1px solid #606060;
+	text-align: left;
+	padding: 10px;
+}

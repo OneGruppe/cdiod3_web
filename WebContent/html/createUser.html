@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<title>Create User</title>
+<link rel="stylesheet" type="text/css" href="../css/admin_site.css">
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/subsite_buttons.js"></script>
+<script src="js/createUser.js"></script>
+</head>
+
+	<body>
+		<h1>Create User</h1>
+		<h4>Admin login</h4>
+		
+		<div class="adminButtons">
+			<button id="frontPage">Front Page</button>
+			<button>Create User</button>
+			<button id="updateUserBotton">Update user</button>
+			<button id="deleteUserBotton">Delete user</button>
+			<button id="showAllUsersButton">Show all users</button>
+			<button id="showUserButton">Show user</button>
+			<button id="logoutButton">Log out</button> <br> <br>
+		</div>
+		
+		<form class="createUserFunction" method="POST">
+			<label> Username </label> <br>
+				<input type="text" name="username" autofocus> <br>
+			<label> Password </label>  <br>
+				<input type="password" name="password">  <br>
+			<label> Initials </label> <br>
+				<input type="text" name="ini"> <br>
+			<label> CPR-number </label>	<br>
+				<input type="text" name="CPR"><br><br>
+			<label> Choose role: </label> <br>
+				<input id="1" type="checkbox" name="admin" value=true>
+			<label> - Admin </label> <br>
+				<input id="2" type="checkbox" name="laborant" value=true>
+			<label> - Laborant </label>	<br>
+				<input id="3" type="checkbox" name="farmaceut" value=true>
+			<label> - Farmaceut </label> <br>
+				<input id="4" type="checkbox" name="produktionsleder" value=true>
+			<label> - Produktionsleder </label> <br>
+		</form> <br>
+		
+		<button id="actuallyCreatingAUser" form="createUserFunction" type="submit"> Create User</button>
+	</body>
+</html>

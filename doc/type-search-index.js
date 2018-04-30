@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"<Unnamed>","l":"AppConfig"},{"p":"functionality","l":"Functionality"},{"p":"functionality","l":"IFunctionality"},{"p":"data","l":"IUserDAO"},{"p":"data","l":"IUserDAO.DALException"},{"p":"data","l":"OfflineUserDAO"},{"p":"data","l":"UserDAO"},{"p":"data","l":"UserDTO"}]

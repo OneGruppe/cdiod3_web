@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Show Users</title>
+<link rel="stylesheet" type="text/css" href="../css/admin_site.css">
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/subsite_buttons.js"></script>
+<script src="js/showUser.js"></script>
+</head>
+
+	<body>
+		<h1>Show User</h1>
+		<h4>Admin login</h4>
+		
+		<div class="adminButtons">
+			<button id="frontPage">Front Page</button>
+			<button id="createUserButton">Create User</button>
+			<button id="updateUserBotton">Update user</button>
+			<button id="deleteUserBotton">Delete user</button>
+			<button id="showAllUsersButton">Show all users</button>
+			<button>Show user</button>
+			<button id="logoutButton">Log out</button> <br> <br>
+		</div>
+
+		<form id="showUser_search" method="GET">
+			<label>Name of desired user:</label>
+			<input type="text" name="username" autofocus required>
+			<button id="retrieveUserButton" form="showUser_search" type="submit"> Find User</button> <br>
+		</form>
+				
+		<div id="showUserContainer">
+			<h3 style="text-align:center;">Showing selected user</h3>
+		</div>
+	</body>
+</html>

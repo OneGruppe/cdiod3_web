@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Admin-Login</title>
+<link rel="stylesheet" type="text/css" href="css/admin_site.css">
+<script src="js/jquery-3.3.1.js"></script>
+<script src="js/login.js"></script>
+</head>
+
+	<body>
+		<div class="login">
+			<form id="loginForm">
+				<label for="username">Username:</label> 
+				<input id="username" type="text" placeholder="Username:" name="username" value='admin' required autofocus>
+				<label for="password"> Password:</label>
+				<input id="password" type="password" placeholder="Password:" name="password">
+			</form> <br>
+			<button id='loginButton' form="loginForm" type="submit">Log-in</button>
+		</div>
+		
+		<div class="loadToDiv"></div>
+		
+	</body>
+</html>
