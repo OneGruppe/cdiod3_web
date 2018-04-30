@@ -1,9 +1,9 @@
 body {
-	background-color: #d0d7dd;
+	background-color: #e0e0e0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	color: #383838;
+	color: #2d324e;
 }
 
 h4 {
@@ -26,7 +26,6 @@ h4 {
 	padding-bottom: 20px;
 	background-color: #e3e9ef;
 	border: 1.5px solid #383838;
-	border-radius: 10px;
 	font-family: sans-serif;
 	display: inline;
 }
@@ -34,16 +33,15 @@ h4 {
 button {
 	width: 90px;
 	height: 20px;
-	background-color: #1d5284;
+	background-color: #521010;
 	color: white;
 	border: .5px solid black;
-	border-radius: 7px;
 	margin-left: 8px;
 }
 
 button:hover {
 	cursor: pointer;
-	background-color: #023b70;
+	background-color: #00001b;
 	color: #edcbcb;
 }
 
@@ -56,6 +54,7 @@ button:hover {
 
 label {
 	font-weight: 600;
+	color: #15345f;
 }
 
 .login {
@@ -63,8 +62,8 @@ label {
 	height: 100px;
 	background-color: #fff;
 	border: 1px solid black;
-	border-radius: 5px;
-	box-shadow: 5px 20px 50px;
+	--box-shadow-color: #00001b;
+	box-shadow: 10px 5px 15px var(--box-shadow-color);
 	font-family: sans-serif;
 	padding: 25px;
 	padding-bottom: 90px;
